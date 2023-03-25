@@ -51,6 +51,7 @@ class Game:
             msgs += breakAt(f'You attacked a {self.event["montype"]} for {self.event["monster"]} damage.', len(board[0]))
             if self.event['mondead']:
                 msgs += breakAt(f' You destroyed the {self.event["montype"]}!')
+        return msgs
 
     def sendCommand(self, cmd):
         self.event['pillar'] = False
