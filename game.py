@@ -39,10 +39,10 @@ class Game:
         setCharAt(board, x, y, self.dir)
         for ob in self.room.getPillars():
             setCharAt(board, ob[0], ob[1], '*')
-        for mon in self.room.getMonsters():
-            setCharAt(board, mon.x, mon.y, '@')
         for item in self.room.getItems():
             setCharAt(board, item.x, item.y, '+')
+        for mon in self.room.getMonsters():
+            setCharAt(board, mon.x, mon.y, '@')
         return board
 
     def getMessages(self):
