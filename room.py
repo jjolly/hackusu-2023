@@ -55,7 +55,7 @@ class room:
             while (looking):
                 tempX = random.randint(1, self.x-1)
                 tempY = random.randint(1, self.y-1)
-                if [tempX, tempY] not in self.pillars:
+                if [tempX, tempY] not in self.avoid:
                     self.looking = True
                     avoid.append([tempX,tempY])
             mon = creature.randomMonster(self.level, created, tempX, tempY)
@@ -75,6 +75,7 @@ class room:
             item = items.createItems(self.level, created, tempX, tempY)
             sel.items.append(mon)
         self.level += 1
+        self.exit = False
     # getters and setters
     def getPillars(self):
         return self.pillars
@@ -86,12 +87,32 @@ class room:
         return self.level
     def getEndCondition(self):
         return self.endCondition
+    def returnExit(self):
+        return self.exit
+    def setupExit(self):
+        avoid = []
+        avoid.append(self.pc.getPosition())
+        avoid += self.pillars
+        use = self.getItems()
+        for i in use:
+            avoid.append(i)
+        looking = False
+        while (looking):
+            tempX = random.randint(1, self.x-1)
+            tempY = random.randint(1, self.y-1)
+            if [tempX, tempY] not in avoid:
+                self.looking = True
+                avoid.append([tempX,tempY])
+                self.exit = [tempX,tempY]
     def removeMonster(self, monsterID):
         deleted = False
         for i in range(self.monsters):
             if self.monsters[i].getID() == monsterID:
                 deleted = True
                 self.monsters.pop(i)
+        if len(self.monsters) <= 0:
+            self.endCondition = True
+            self.setupExit()
         if not deleted:
             raise('ATTEMPTING TO DESTROY A MONSTER THAT DOES NOT EXIST')
         return True
