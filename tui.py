@@ -38,7 +38,7 @@ def play_step(game):
         print(line)
     print(game.getMessages())
     stats = game.getStats()
-    print(f"HP: {stats['hp']}, Str: {stats['str']}, Dex: {stats['dex']}, Wis: {stats['wis']}, Exp: {stats['exp']}")
+    print(f"HP: {stats['hp']:.1f}, Str: {stats['str']:.0f}, Dex: {stats['dex']:.0f}, Wis: {stats['wis']:.0f}, Exp: {stats['exp']:.0f}")
     inv = ''
     for i in range(len(stats['inv'])):
         item = stats['inv'][i]
