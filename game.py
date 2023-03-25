@@ -1,6 +1,11 @@
 import room
 import creatures
 
+def setCharAt(board, x, y, ch):
+    line = board[y + 1]
+    line = line[:x + 1] + ch + line[x + 2:]
+    board[y + 1] = line
+
 class Game:
     def __init__(self):
         self.pc = creatures.pc()
@@ -12,9 +17,12 @@ class Game:
         w = self.room.x
         h = self.room.y
         board = ['+' + '=' * w + '+'] + ['|' + ' ' * w + '|'] * h + ['+' + '=' * w + '+']
-        line = board[y + 1]
-        line = line[:x+1] + '#' + line[x+2:]
-        board[y + 1] = line
+        #line = board[y + 1]
+        #line = line[:x+1] + '#' + line[x+2:]
+        #board[y + 1] = line
+        setCharAt(board, x, y, '#')
+        for ob in self.room.getPillars():
+            setCharAt(board, ob[0], ob[1], '*')
         return board
 
     def sendCommand(self, cmd):
