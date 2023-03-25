@@ -80,7 +80,7 @@ class monster(creatures):
         self.strength = ['orc']
         self.dexterity = ['spider', 'skeleton']
         self.wisdom = []
-        self.hp = self.hp ** (depth)
+        self.hp = random.randint(10,20)
         self.str = (self.str ** (depth))/2+1
         self.dex = (self.dex ** (depth))/5+1
         self.wis = (self.wis ** (depth))/3+1
@@ -149,7 +149,7 @@ class pc(creatures):
     	return self.inventory[0]
     def attack(self):
         use = self.getEquipped()
-        return round(use.useItem(self)*(1+self.exp)/15 if use else self.str/2*(1+self.exp)/15)
+        return round(use.useItem(self)*(1+self.exp)/40 if use else self.str/2*(1+self.exp)/30)
     def attackStr(self, modifier):
         return self.str*modifier/2
     def attackDex(self, modifier):
@@ -167,9 +167,9 @@ class pc(creatures):
     
          self.inventory = [self.secretStarter]
     def resetHealth(self):
-         self.HP = random.randint(10,20)
+         self.hp = random.randint(10,20)
     def wound(self, damage):
-        self.hp -= (damage - self.exp/25)
+        self.hp -= (damage - self.exp/50)
     		
     
         
