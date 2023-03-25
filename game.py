@@ -87,7 +87,6 @@ class Game:
             if inum <= len(inv):
                 self.event['used'] = inv[inum - 1].getName()
                 del inv[inum - 1];
-            return
         if cmd == "RIGHT" and x < w - 1:
            x += 1
         if cmd == "LEFT" and x > 0:
@@ -117,6 +116,7 @@ class Game:
                 self.event['itemname'] = item.getName()
         self.pc.x = x
         self.pc.y = y
+        return not self.room.monstersTurn()
     def getStats(self):
         ret = {}
         ret['hp'] = self.pc.getHP()

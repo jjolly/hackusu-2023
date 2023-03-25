@@ -12,6 +12,7 @@ def send_command(game, ch):
             'd': "RIGHT",
             'u': "USE"
           }
+    ret = True
     if ch in cmd:
         cmdword = cmd[ch]
         if cmdword == "USE":
@@ -25,7 +26,9 @@ def send_command(game, ch):
             if inum < 1 or inum > len(inv):
                 return
             cmdword += ' ' + str(inum)
-        game.sendCommand(cmdword)
+        ret = game.sendCommand(cmdword)
+
+    return ret
 
 def play_step(game):
     board = game.getBoard()
@@ -49,15 +52,12 @@ def play_step(game):
     if ch == 'q':
         print("See ya!")
         return False
-    send_command(game, ch)
-    return True
+    return send_command(game, ch)
 
 def run_game():
     game = Game()
-    while True:
-        result = play_step(game)
-        if not result:
-            break
+    while play_step(game):
+        pass
 
 if __name__ == '__main__':
     run_game()
