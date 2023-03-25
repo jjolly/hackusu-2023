@@ -75,7 +75,7 @@ class room:
                     looking = False
                     avoid.append([tempX,tempY])
             item = items.createItems(self.level, ids, tempX, tempY)
-            self.items.append(mon)
+            self.items.append(item)
             created += 1
             ids += 1
         self.level += 1
