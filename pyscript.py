@@ -66,7 +66,10 @@ def draw_stats(game, window):
     for key in playerStats:
         value = playerStats[key]
         if key != "inv":
-            stringStats += "\n" + key + " : " + str(value)
+            if key =="hp":
+                stringStats += f"\n{key} : {value:.1f}"
+            else:
+                stringStats += f"\n{key} : {value}"
         else:
             stringStats += f"\n{key} : {len(value)} of 9"
     window.write(stringStats)
