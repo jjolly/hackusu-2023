@@ -6,18 +6,10 @@ from collections import Counter
 
 def onKeyPress(event):
     event.preventDefault()
-    
-    check = send_command(gameObject, event.key) 
-    if check == False:
-        js.document.removeEventListener("keydown", create_proxy(onKeyPress))
-        Element('game-screen').write('')
-        start_game()
+    print(event.key)
+    send_command(gameObject, event.key) 
 
 
-def start_game():
-    game = Game()
-    js.document.addEventListener('keydown', create_proxy(onKeyPress))
-    return game
 
 def current_key(key):
     # Get paragraph element by id
@@ -53,8 +45,6 @@ def send_command(game, ch):
             commandString = f"USE {ch}"
             game.sendCommand(commandString)
         else:
-            test = game.sendCommand(cmdword)
-            print(test)
             game.sendCommand(cmdword)
         draw_board(game, Element("game-screen"))
         draw_stats(game, Element("stats"))
@@ -84,17 +74,23 @@ def draw_messages(game, window, ch):
         window.write(messages)
     else:
         inv = game.getStats()["inv"]
-        inventoryDict = Counter(inv)
-        inventoryString = "Your Inventory : | "
+        inventoryString = "Your Inventory\n"
         counter = 1
-        for thing, count in inventoryDict.items():
+        for thing in inv:
             if counter <= 9:
-                inventoryString += f"({counter}) {count} {thing} | "
+                inventoryString += f"({counter}) {thing} | "
                 counter += 1
+        # inventoryDict = Counter(inv)
+        # inventoryString = "Your Inventory : | "
+        # counter = 1
+        # for thing, count in inventoryDict.items():
+        #     if counter <= 9:
+        #         inventoryString += f"({counter}) {count} {thing} | "
+        #         counter += 1
         window.write(inventoryString)
 
 
-gameObject = start_game()
+gameObject = Game()
 draw_board(gameObject, Element("game-screen"))
 draw_stats(gameObject, Element("stats"))
 
