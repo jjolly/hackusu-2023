@@ -210,3 +210,10 @@ class room:
         return False
     def calcDistance(self, loc1, loc2):
         return ((loc1[0]-loc2[0])**2 + (loc1[1]-loc2[1])**2)**(1/2)
+    def reset(self):
+        self.level = 0
+        self.createNewRoom()
+        self.pc.inventory = []
+        self.pc.resetEquipped()
+        self.pc.resetHealth()
+

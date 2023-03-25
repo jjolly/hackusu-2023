@@ -58,6 +58,8 @@ class fireball(scroll):
         rand = random.randint(0,10)
         if rand == 5:
             pc.wound(self.change)
+            if pc.getHP() <= 0:
+                 pc.wound(pc.getHP()-1)
             return 0
         else:
             return self.change + rand 
