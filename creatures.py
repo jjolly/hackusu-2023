@@ -81,9 +81,9 @@ class monster(creatures):
         self.dexterity = ['spider', 'skeleton']
         self.wisdom = []
         self.hp = random.randint(10,20)
-        self.str = (self.str ** (depth))/2+1
-        self.dex = (self.dex ** (depth))/5+1
-        self.wis = (self.wis ** (depth))/3+1
+        self.str = (self.str ** (depth))
+        self.dex = (self.dex ** (depth))
+        self.wis = (self.wis ** (depth))
         self.x = x
         self.y = y
         self.id = ID
