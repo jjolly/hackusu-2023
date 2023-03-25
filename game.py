@@ -10,6 +10,9 @@ class Game:
     def __init__(self):
         self.pc = creatures.pc()
         self.room = room.room(self.pc)
+        self.event = {}
+        self.event['pillar'] = False
+        self.event['monster'] = 0
 
     def getBoard(self):
         x = self.pc.x
@@ -22,6 +25,12 @@ class Game:
             setCharAt(board, ob[0], ob[1], '*')
         for mon in self.room.getMonsters():
             setCharAt(board, mon.x, mon.y, '@')
+        if self.event['pillar']:
+            board.append('Ouch! You can\'t go that way!')
+            self.event['pillar'] = False
+        if self.event['monster'] > 0:
+            board.append(f'You attacked the monster for {self.event["monster"]} damage')
+            self.event['monster'] = 0
         return board
 
     def sendCommand(self, cmd):
@@ -43,11 +52,13 @@ class Game:
             if ob[0] == x and ob[1] == y:
                 x = ox
                 y = oy
+                self.event['pillar'] = True
                 break
         for mon in self.room.getMonsters():
             if mon.x == x and mon.y == y:
                 x = ox
                 y = oy
+                self.event['monster'] = 1
                 break
         self.pc.x = x
         self.pc.y = y
