@@ -27,6 +27,6 @@ class Game:
         if cmd == "LEFT" and x > 0:
            self.pc.setX(x - 1)
         if cmd == "DOWN" and y < h - 1:
-           self.pc.sety(y + 1)
+           self.pc.setY(y + 1)
         if cmd == "UP" and y > 0:
            self.pc.setY(y - 1)
