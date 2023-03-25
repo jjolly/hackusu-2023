@@ -63,6 +63,9 @@ class creatures:
 class monster(creatures):
     def __init__(self,depth, ID, x, y, ty = 'spider'):
         super().__init__(ty)
+        self.strength = ['orc']
+        self.dexterity = ['spider', 'skeleton']
+        self.wisdom = []
         self.hp = self.hp ** depth
         self.str = self.str ** depth
         self.dex = self.dex ** depth
@@ -72,6 +75,13 @@ class monster(creatures):
         self.id = ID
     def getID(self):
         return self.id
+    def attack(self):
+        if self.getType() in self.strength:
+            return self.str/2
+        elif self.getType() in self.dexterity:
+            return self.dex/2
+        elif self.getType() in self.wisdom:
+            return self.wis/2
 class pc(creatures):
     def __init__(self, ty = 'sword'):
         self.level = 1
