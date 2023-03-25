@@ -54,15 +54,15 @@ class fireball(scroll):
         super().__init__(depth, ID, x, y)
         self.change = random.randint(depth * depth, depth * depth*2)
     def useItem(self, pc):
-    	if self.uses <= 0:
-    	     return 0
     	self.uses -= 1
+    	if self.uses <= 0:
+    	     pc.removeInventory(self)
     	rand = random.randint(0,10)
     	if rand == 5:
             pc.wound(self.change)
             if pc.getHP() <= 0:
                  pc.wound(pc.getHP()-1)
-            return 1
+            return 0
     	else:
             return self.change + rand 
 class firebolt(scroll):
@@ -73,6 +73,8 @@ class firebolt(scroll):
     	     return 0
     	rand = random.randint(0,5)
     	self.uses -= 1
+    	if self.uses <= 0:
+    	     pc.removeInventory(self)
     	return self.change + rand 
             
 class healthPotion(items):
@@ -82,6 +84,7 @@ class healthPotion(items):
         self.change = random.randint(depth, 2*(depth+1))
     def useItem(self, pc):
         pc.wound(-self.change)
+        pc.removeInventory(self)
         return 0
 class woundingPotion(items):
     def __init__(self, depth, ID, x, y):
@@ -90,6 +93,7 @@ class woundingPotion(items):
         self.change = random.randint(depth, 2*(depth+1))
     def useItem(self, pc):
         pc.wound(self.change)
+        pc.removeInventory(self)
         return 0
 class drainStrPotion(items):
     def __init__(self, depth, ID, x, y):
@@ -98,6 +102,7 @@ class drainStrPotion(items):
         self.change = random.randint(-2, -1)
     def useItem(self, pc):
         pc.modStr(self.change)
+        pc.removeInventory(self)
         return 0
 class addStrPotion(items):
     def __init__(self, depth, ID, x, y):
@@ -106,6 +111,7 @@ class addStrPotion(items):
         self.change = random.randint(1, 2)
     def useItem(self, pc):
         pc.modStr(self.change)
+        pc.removeInventory(self)
         return 0
 class drainDexPotion(items):
     def __init__(self, depth, ID, x, y):
@@ -114,6 +120,7 @@ class drainDexPotion(items):
         self.change = random.randint(-2, -1)
     def useItem(self, pc):
         pc.modDex(self.change)
+        pc.removeInventory(self)
         return 0
 class addDexPotion(items):
     def __init__(self, depth, ID, x, y):
@@ -122,6 +129,7 @@ class addDexPotion(items):
         self.change = random.randint(1, 2)
     def useItem(self, pc):
         pc.modDex(self.change)
+        pc.removeInventory(self)
         return 0
 class drainWisPotion(items):
     def __init__(self, depth, ID, x, y):
@@ -130,6 +138,7 @@ class drainWisPotion(items):
         self.change = random.randint(-2, -1)
     def useItem(self, pc):
         pc.modWis(self.change)
+        pc.removeInventory(self)
         return 0
 class addWisPotion(items):
     def __init__(self, depth, ID, x, y):
@@ -138,6 +147,7 @@ class addWisPotion(items):
         self.change = random.randint(1, 2)
     def useItem(self, pc):
         pc.modWis(self.change)
+        pc.removeInventory(self)
         return 0
 class aSword(items):
     def __init__(self, depth, ID, x, y):
@@ -149,7 +159,7 @@ class aSword(items):
              return pc.attackStr(self.modifier)
     	else:
              pc.setEquipped(self)
-             return 1
+             return 0
 class aBow(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
@@ -160,7 +170,7 @@ class aBow(items):
              return pc.attackDex(self.modifier)
     	else:
              pc.setEquipped(self)
-             return 1
+             return 0
 class aStaff(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
@@ -171,6 +181,4 @@ class aStaff(items):
              return pc.attackWis(self.modifier)
     	else:
              pc.setEquipped(self)
-             return 1
-
-    
+             return 0
