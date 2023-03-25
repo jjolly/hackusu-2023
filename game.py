@@ -22,6 +22,7 @@ class Game:
         self.pc = creatures.pc()
         self.room = room.room(self.pc)
         self.event = {}
+        self.event['error'] = ''
         self.event['pillar'] = False
         self.event['mondmg'] = 0
         self.event['mondead'] = False
@@ -44,6 +45,8 @@ class Game:
 
     def getMessages(self):
         msgs = ''
+        if len(self.event['error']) > 0:
+            msgs = f'ERROR: {self.event["error"]}'
         if self.event['pillar']:
             if(len(msgs) > 0):
                 msgs += ' '
@@ -61,6 +64,7 @@ class Game:
         return msgs
 
     def sendCommand(self, cmd):
+        self.event['error'] = ''
         self.event['pillar'] = False
         self.event['mondmg'] = 0
         self.event['mondead'] = False
