@@ -13,12 +13,25 @@ exp
 type
 inventory
 '''
+import random
+class randomMonster:
+    def __init__(self,depth, ID, x, y):
+        types = ['spider',
+                 'orc',
+                 'skeleton,
+                 ]
+        use = random.randint(0, len(types))
+        return monster(depth, ID, x, y, types[use])
 class creatures:
     def __init__(self, ty):
         self.baseStats ={
             'sword':[10, 5,4,3],
-
-            'spider':[2,2,3,2],
+            'bow':[7, 4,5,3],
+            'staff':[5,3,4,5],
+            # monster section
+            'spider':[3,2,3,2],
+            'orc':[6,4,2,2],
+            'skeleton':[2,2,3,1],
             }
         self.hp = self.baseStats[ty][0]
         self.str = self.baseStats[ty][1]

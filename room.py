@@ -58,7 +58,7 @@ class room:
                 if [tempX, tempY] not in self.pillars:
                     self.looking = True
                     avoid.append([tempX,tempY])
-            mon = creature.monster(self.level, created, tempX, tempY)
+            mon = creature.randomMonster(self.level, created, tempX, tempY)
             sel.monsters.append(mon)
         # set up items
         create = self.random(1,10)
