@@ -152,7 +152,7 @@ class pc(creatures):
     	self.exp += exp
     	ret = False
     	if self.exp >= self.needed:
-    		self.needed *= 2.5
+    		self.needed *= 3
     		ret = True
     	return ret
     		
