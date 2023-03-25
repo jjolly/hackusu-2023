@@ -23,7 +23,6 @@ def send_command(game, ch):
             except:
                 inum = 0
             if inum < 1 or inum > len(inv):
-                assert(False)
                 return
             cmdword += ' ' + str(inum)
         game.sendCommand(cmdword)
