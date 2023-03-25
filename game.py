@@ -27,6 +27,7 @@ class Game:
         self.event['mondmg'] = 0
         self.event['mondead'] = False
         self.event['itemname'] = ''
+        self.event['used'] = ''
 
     def getBoard(self):
         x = self.pc.x
@@ -61,6 +62,10 @@ class Game:
             if(len(msgs) > 0):
                 msgs += ' '
             msgs += f'You picked up a {self.event["itemname"]}.'
+        if len(self.event['used']) > 0:
+            if(len(msgs) > 0):
+                msgs += ' '
+            msgs += f'Just used a {self.event["used"]}.'
         return msgs
 
     def sendCommand(self, cmd):
@@ -69,12 +74,20 @@ class Game:
         self.event['mondmg'] = 0
         self.event['mondead'] = False
         self.event['itemname'] = ''
+        self.event['used'] = ''
         x = self.pc.x
         y = self.pc.y
         ox = x
         oy = y
         w = self.room.x
         h = self.room.y
+        if len(cmd) > 4 and cmd[:4] == "USE ":
+            inum = int(cmd[4:])
+            inv = self.pc.getInventory()
+            if inum <= len(inv):
+                self.event['used'] = inv[inum - 1].getName()
+                del inv[inum - 1];
+            return
         if cmd == "RIGHT" and x < w - 1:
            x += 1
         if cmd == "LEFT" and x > 0:
