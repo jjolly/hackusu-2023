@@ -23,7 +23,8 @@ class Game:
         self.room = room.room(self.pc)
         self.event = {}
         self.event['pillar'] = False
-        self.event['monster'] = 0
+        self.event['mondmg'] = 0
+        self.event['mondead'] = False
 
     def getBoard(self):
         x = self.pc.x
@@ -39,9 +40,11 @@ class Game:
         if self.event['pillar']:
             board += breakAt('Ouch! You can\'t go that way!', len(board[0]))
             self.event['pillar'] = False
-        if self.event['monster'] > 0:
-            board += breakAt(f'You attacked the monster for {self.event["monster"]} damage', len(board[0]))
+        if self.event['mondmg'] > 0:
+            board += breakAt(f'You attacked a {self.event["montype"]} for {self.event["monster"]} damage', len(board[0]))
             self.event['monster'] = 0
+            if self.event['mondead']:
+                board += breakAt(f'You destroyed the {self.event["montype"]}')
         return board
 
     def sendCommand(self, cmd):
@@ -69,7 +72,10 @@ class Game:
             if mon.x == x and mon.y == y:
                 x = ox
                 y = oy
-                self.event['monster'] = 1
+                dmgToMon = self.pc.attack()
+                self.event['mondmg'] = dmgToMon
+                self.event['montype'] = mon.getType()
+                self.event['mondead'] = self.room.damageMonster(mon.getID(), dmgToMon)
                 break
         self.pc.x = x
         self.pc.y = y
