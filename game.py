@@ -37,7 +37,8 @@ class Game:
         y = self.pc.y
         w = self.room.x
         h = self.room.y
-        board = ['+' + '=' * w + '+'] + ['|' + ' ' * w + '|'] * h + ['+' + '=' * w + '+']
+        levelstr = f'Level {self.room.getLevel()}'
+        board = ['+=|' + levelstr + '|' + '=' * (w - len(levelstr) - 3) + '+'] + ['|' + ' ' * w + '|'] * h + ['+' + '=' * w + '+']
         for ob in self.room.getPillars():
             setCharAt(board, ob[0], ob[1], '*')
         for item in self.room.getItems():
