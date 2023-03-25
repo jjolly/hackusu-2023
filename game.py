@@ -110,6 +110,11 @@ class Game:
                             self.event['montype'] = mon.getType()
                             self.event['mondead'] = self.room.damageMonster(mon.getID(), dmg)
                             break
+        if len(cmd) > 7 and cmd[:7] == "REMOVE ":
+            inum = int(cmd[7:])
+            inv = self.pc.getInventory()
+            if(inum <= len(inv)):
+                self.pc.removeInventory(inv[inum - 1])
         if cmd == "RIGHT" and x < w - 1:
             self.dir = '>'
             x += 1

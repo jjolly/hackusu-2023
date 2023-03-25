@@ -10,14 +10,15 @@ def send_command(game, ch):
             'a': "LEFT",
             's': "DOWN",
             'd': "RIGHT",
-            'u': "USE"
+            'u': "USE",
+            'r': "REMOVE"
           }
     ret = True
     if ch in cmd:
         cmdword = cmd[ch]
-        if cmdword == "USE":
+        if cmdword == "USE" or cmdword == "REMOVE":
             inv = game.getStats()['inv']
-            print(f"What needs to go (1-{len(inv)})? ", end='')
+            print(f"What shall we {cmdword} (1-{len(inv)})? ", end='')
             sys.stdout.flush()
             try:
                 inum = int(getch())
