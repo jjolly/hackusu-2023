@@ -28,13 +28,22 @@ class Game:
     def sendCommand(self, cmd):
         x = self.pc.x
         y = self.pc.y
+        ox = x
+        oy = y
         w = self.room.x
         h = self.room.y
         if cmd == "RIGHT" and x < w - 1:
-           self.pc.setX(x + 1)
+           x += 1
         if cmd == "LEFT" and x > 0:
-           self.pc.setX(x - 1)
+           x -= 1
         if cmd == "DOWN" and y < h - 1:
-           self.pc.setY(y + 1)
+           y += 1
         if cmd == "UP" and y > 0:
-           self.pc.setY(y - 1)
+           y -= 1
+        for ob in self.room.getPillars():
+            if ob[0] == x and ob[1] == y:
+                x = ox
+                y = oy
+                break
+        self.pc.x = x
+        self.pc.y = y
