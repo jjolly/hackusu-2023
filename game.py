@@ -37,6 +37,8 @@ class Game:
             setCharAt(board, ob[0], ob[1], '*')
         for mon in self.room.getMonsters():
             setCharAt(board, mon.x, mon.y, '@')
+        for item in self.room.getItems():
+            setCharAt(board, item.x, item.y, '+')
         return board
 
     def getMessages(self):
