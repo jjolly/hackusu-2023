@@ -83,11 +83,24 @@ class Game:
         w = self.room.x
         h = self.room.y
         if len(cmd) > 4 and cmd[:4] == "USE ":
+            diradj = {'^': [0 ,-1],
+                      'v': [0 , 1],
+                      '<': [-1, 0],
+                      '>': [ 1, 0]}
             inum = int(cmd[4:])
             inv = self.pc.getInventory()
             if inum <= len(inv):
                 self.event['used'] = inv[inum - 1].getName()
-                del inv[inum - 1];
+                dmg = inv[inum - 1].useItem(self.pc)
+                if dmg > 0:
+                    mx = x + diradj[self.dir][0]
+                    my = y + diradj[self.dir][1]
+                    for mon in self.room.getMonsters():
+                        if mon.x == mx and mon.y == my:
+                            self.event['mondmg'] = dmg
+                            self.event['montype'] = mon.getType()
+                            self.event['mondead'] = self.room.damageMonster(mon.getID(), dmg)
+                            break
         if cmd == "RIGHT" and x < w - 1:
             self.dir = '>'
             x += 1
