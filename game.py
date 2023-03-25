@@ -167,7 +167,10 @@ class Game:
                     self.event['burdened'] = True
         self.pc.x = x
         self.pc.y = y
-        return not self.room.monstersTurn()
+        if self.room.monstersTurn():
+            self.room.reset()
+            self.event['died'] = True
+        return True
     def getStats(self):
         ret = {}
         ret['hp'] = self.pc.getHP()
