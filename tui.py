@@ -9,10 +9,24 @@ def send_command(game, ch):
             'w': "UP",
             'a': "LEFT",
             's': "DOWN",
-            'd': "RIGHT"
+            'd': "RIGHT",
+            'u': "USE"
           }
     if ch in cmd:
-        game.sendCommand(cmd[ch])
+        cmdword = cmd[ch]
+        if cmdword == "USE":
+            inv = game.getStats()['inv']
+            print(f"What needs to go (1-{len(inv)})? ", end='')
+            sys.stdout.flush()
+            try:
+                inum = int(getch())
+            except:
+                inum = 0
+            if inum < 1 or inum > len(inv):
+                assert(False)
+                return
+            cmdword += ' ' + str(inum)
+        game.sendCommand(cmdword)
 
 def play_step(game):
     board = game.getBoard()
