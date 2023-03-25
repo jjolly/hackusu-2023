@@ -19,7 +19,7 @@ def play_step(game):
     os.system('clear')
     for line in board:
         print(line)
-    print(game.getMessages)
+    print(game.getMessages())
     stats = game.getStats()
     print(f"HP: {stats['hp']}, Str: {stats['str']}, Dex: {stats['dex']}, Wis: {stats['wis']}, Exp: {stats['exp']}")
     inv = ''
