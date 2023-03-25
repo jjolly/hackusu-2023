@@ -155,67 +155,50 @@ class room:
             moves = 0
             while moves < mon.getMove():
                  monPos = mon.getPosition()
-                 pcPos = pc.getPosition()
-                 distY = abs(monPos[1] - pcPos[1])
-                 distX = abs(monPos[0] - pcPos[0])
-                 looking = True
-                 while looking:
-                      if distY < distX:
-                           if monPos[1] - pcPos[1] < 0:
-                                if [monPos[0], monPos[1]+1] == self.pc.getPosition():
-                                     damage = mon.attack()
-                                     self.pc.wound(damage)
-                                     if self.pc.getHP() <= 0:
-                                         return True
-                                elif [monPos[0], monPos[1]+1] not in avoid:
-                                     mon.setY(monPos[1]+1)
-                                elif [monPos[0] + 1, monPos[1]] not in avoid:
-                                     mon.setX(monPos[0]+1)
-                                elif [monPos[0] - 1, monPos[1]] not in avoid:
-                                     mon.setX(monPos[0]-1)
-                                elif [monPos[0], monPos[1]-1] not in avoid:
-                                     mon.setY(monPos[1]-1)
-                           else:
-                                if [monPos[0], monPos[1]-1] == self.pc.getPosition():
-                                     damage = mon.attack()
-                                     self.pc.wound(damage)
-                                     if self.pc.getHP() <= 0:
-                                         return True
-                                elif [monPos[0], monPos[1]-1] not in avoid:
-                                     mon.setY(monPos[1]-1)
-                                elif [monPos[0] - 1, monPos[1]] not in avoid:
-                                     mon.setX(monPos[0]-1)
-                                elif [monPos[0] + 1, monPos[1]] not in avoid:
-                                     mon.setX(monPos[0]+1)
-                                elif [monPos[0], monPos[1]+1] not in avoid:
-                                     mon.setY(monPos[1]+1)
-                      else:
-                           if monPos[0] - pcPos[0] < 0:
-                                if [monPos[0]+1, monPos[1]] == self.pc.getPosition():
-                                     damage = mon.attack()
-                                     self.pc.wound(damage)
-                                     if self.pc.getHP() <= 0:
-                                         return True
-                                elif [monPos[0]+1, monPos[1]] not in avoid:
-                                     mon.setX(monPos[0]+1)
-                                elif [monPos[0], monPos[1]+1] not in avoid:
-                                     mon.setY(monPos[1]+1)
-                                elif [monPos[0], monPos[1]-1] not in avoid:
-                                     mon.setY(monPos[1]-1)
-                                elif [monPos[0]-1, monPos[1]] not in avoid:
-                                     mon.setX(monPos[0]-1)
-                           else:
-                                if [monPos[0]-1, monPos[1]] == self.pc.getPosition():
-                                     damage = mon.attack()
-                                     self.pc.wound(damage)
-                                     if self.pc.getHP() <= 0:
-                                         return True
-                                elif [monPos[0]-1, monPos[1]] not in avoid:
-                                     mon.setX(monPos[0]-1)
-                                elif [monPos[0], monPos[1]-1] not in avoid:
-                                     mon.setY(monPos[1]-1)
-                                elif [monPos[0], monPos[1]+1] not in avoid:
-                                     mon.setY(monPos[1]+1)
-                                elif [monPos[0]-1, monPos[1]] not in avoid:
-                                     mon.setX(monPos[0]+1)
-                      moves += 1
+                 pcPos = self.pc.getPosition()
+                 if self.calcDistance([monPos[0],monPos[1]+1], pcPos) < self.calcDistance([monPos[0],monPos[1]-1], pcPos):
+                     try1 = [monPos[0],monPos[1]-1]
+                     try2 = [monPos[0],monPos[1]+1]
+                 else:
+                     try1 = [monPos[0],monPos[1]+1]
+                     try2 = [monPos[0],monPos[1]-1]
+                 if self.calcDistance([monPos[0]+1,monPos[1]], pcPos) < self.calcDistance([monPos[0]-1,monPos[1]], pcPos):
+                     try3 = [monPos[0]-1,monPos[1]]
+                     try4 = [monPos[0]+1,monPos[1]]
+                 else:
+                     try3 = [monPos[0]+1,monPos[1]]
+                     try4 = [monPos[0]-1,monPos[1]]
+                 if self.calcDistance(try1, pcPos) < self.calcDistance(try3, pcPos) and try1 not in avoid:
+                     if try1[0] == pcPos[0] and try1[1] == pcPos[1]:
+                          damage = mon.attack()
+                          self.pc.wound(damage)
+                          if self.pc.getHP() <= 0:
+                               return True
+                     else:
+                          mon.setX(try1[0])
+                          mon.setY(try1[1])
+                 elif try3 not in avoid:
+                     if try3[0] == pcPos[0] and try3[1] == pcPos[1]:
+                          damage = mon.attack()
+                          self.pc.wound(damage)
+                          if self.pc.getHP() <= 0:
+                               return True
+                     else:
+                          mon.setX(try3[0])
+                          mon.setY(try3[1])
+                 elif try1 not in avoid:
+                     mon.setX(try1[0])
+                     mon.setY(try1[1])
+                 if self.calcDistance(try2, pcPos) < self.calcDistance(try4, pcPos) and try1 not in avoid:
+                     mon.setX(try2[0])
+                     mon.setY(try2[1])
+                 elif try4 not in avoid:
+                     mon.setX(try4[0])
+                     mon.setY(try4[1])
+                 elif try2 not in avoid:
+                     mon.setX(try2[0])
+                     mon.setY(try2[1])
+                 moves += 1
+        return False
+    def calcDistance(self, loc1, loc2):
+        return ((loc1[0]-loc2[0])**2 + (loc1[1]-loc2[1])**2)**(1/2)

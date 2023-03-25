@@ -128,6 +128,8 @@ class pc(creatures):
         else:
             raise('ATTEMPTING TO USE ITEM THAT DOES NOT EXIST')
     def setEquipped(self, item):
+    	if self.equipped:
+    	     self.inventory.append(self.equipped)
     	self.equipped = item
     	self.inventory.remove(item)
     def getEquipped(self):
