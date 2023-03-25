@@ -98,11 +98,11 @@ class monster(creatures):
             return (self.wis/2.5)
     def getExp(self):
         if self.getType() in self.strength:
-            return round(self.str/2)
+            return round(self.str/2)+1
         elif self.getType() in self.dexterity:
-            return round(self.dex/2)
+            return round(self.dex/2)+1
         elif self.getType() in self.wisdom:
-            return round(self.wis/2)
+            return round(self.wis/2)+1
 class pc(creatures):
     def __init__(self, ty = 'fighter'):
         super().__init__(ty)
@@ -149,7 +149,7 @@ class pc(creatures):
     	return self.inventory[0]
     def attack(self):
         use = self.getEquipped()
-        return round(use.useItem(self) if use else self.str/2)
+        return round(use.useItem(self)*(1+self.exp)/15 if use else self.str/2*(1+self.exp)/15)
     def attackStr(self, modifier):
         return self.str*modifier/2
     def attackDex(self, modifier):
@@ -167,7 +167,8 @@ class pc(creatures):
          self.inventory.append(self.secretStarter)
     def resetHealth(self):
          self.HP = self.secretHealth
-
+    def wound(self, damage):
+        self.hp -= (damage - self.exp/25)
     		
     
         

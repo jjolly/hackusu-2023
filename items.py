@@ -69,8 +69,6 @@ class firebolt(scroll):
     def __init__(self, depth, ID, x, y):
     	super().__init__(depth, ID, x, y)
     def useItem(self, pc):
-    	if self.uses <= 0:
-    	     return 0
     	rand = random.randint(0,5)
     	self.uses -= 1
     	if self.uses <= 0:
@@ -90,7 +88,7 @@ class woundingPotion(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'Potion'
-        self.change = random.randint(depth, 2*(depth+1))
+        self.change = random.randint(depth, 2*depth)
     def useItem(self, pc):
         pc.wound(self.change)
         pc.removeInventory(self)
@@ -99,7 +97,7 @@ class drainStrPotion(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'Potion'
-        self.change = random.randint(-2, -1)
+        self.change = random.randint(-2, 0)
     def useItem(self, pc):
         pc.modStr(self.change)
         pc.removeInventory(self)
@@ -108,7 +106,7 @@ class addStrPotion(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'Potion'
-        self.change = random.randint(1, 2)
+        self.change = random.randint(1, 5)
     def useItem(self, pc):
         pc.modStr(self.change)
         pc.removeInventory(self)
@@ -117,7 +115,7 @@ class drainDexPotion(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'Potion'
-        self.change = random.randint(-2, -1)
+        self.change = random.randint(-2, 0)
     def useItem(self, pc):
         pc.modDex(self.change)
         pc.removeInventory(self)
@@ -126,7 +124,7 @@ class addDexPotion(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'Potion'
-        self.change = random.randint(1, 2)
+        self.change = random.randint(1, 5)
     def useItem(self, pc):
         pc.modDex(self.change)
         pc.removeInventory(self)
@@ -135,7 +133,7 @@ class drainWisPotion(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'Potion'
-        self.change = random.randint(-2, -1)
+        self.change = random.randint(-2, 0)
     def useItem(self, pc):
         pc.modWis(self.change)
         pc.removeInventory(self)
@@ -144,7 +142,7 @@ class addWisPotion(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'Potion'
-        self.change = random.randint(1, 2)
+        self.change = random.randint(1, 5)
     def useItem(self, pc):
         pc.modWis(self.change)
         pc.removeInventory(self)
