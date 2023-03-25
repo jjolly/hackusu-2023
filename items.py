@@ -33,6 +33,7 @@ class items:
         self.y = y
         self.id = ID
         self.name = 'Trash'
+        self.symbol = '?'
     def getID(self):
         return self.id
     def getName(self):
@@ -43,6 +44,7 @@ class scroll(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'Scroll'
+        self.symbol = '?' if random.randint(0, 10) < 7 else '$'
         self.uses = random.randint(1, 5)
         self.change = random.randint(int(depth * depth / 2), depth * depth)
     def getUses(self):
@@ -74,80 +76,82 @@ class firebolt(scroll):
     	if self.uses <= 0:
     	     pc.removeInventory(self)
     	return self.change + rand 
-            
-class healthPotion(items):
+
+class potion(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'Potion'
+        self.symbol = '?' if random.randint(0, 10) < 7 else u'\u20B1'
+            
+class healthPotion(potion):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
         self.change = random.randint(depth, 2*(depth+1))
     def useItem(self, pc):
         pc.wound(-self.change)
         pc.removeInventory(self)
         return 0
-class woundingPotion(items):
+class woundingPotion(potion):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
-        self.name = 'Potion'
         self.change = random.randint(depth, 2*depth)
     def useItem(self, pc):
         pc.wound(self.change)
         pc.removeInventory(self)
         return 0
-class drainStrPotion(items):
+class drainStrPotion(potion):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
-        self.name = 'Potion'
         self.change = random.randint(-2, 0)
     def useItem(self, pc):
         pc.modStr(self.change)
         pc.removeInventory(self)
         return 0
-class addStrPotion(items):
+class addStrPotion(potion):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
-        self.name = 'Potion'
         self.change = random.randint(1, 5)
     def useItem(self, pc):
         pc.modStr(self.change)
         pc.removeInventory(self)
         return 0
-class drainDexPotion(items):
+class drainDexPotion(potion):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
-        self.name = 'Potion'
         self.change = random.randint(-2, 0)
     def useItem(self, pc):
         pc.modDex(self.change)
         pc.removeInventory(self)
         return 0
-class addDexPotion(items):
+class addDexPotion(potion):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
-        self.name = 'Potion'
         self.change = random.randint(1, 5)
     def useItem(self, pc):
         pc.modDex(self.change)
         pc.removeInventory(self)
         return 0
-class drainWisPotion(items):
+class drainWisPotion(potion):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
-        self.name = 'Potion'
         self.change = random.randint(-2, 0)
     def useItem(self, pc):
         pc.modWis(self.change)
         pc.removeInventory(self)
         return 0
-class addWisPotion(items):
+class addWisPotion(potion):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
-        self.name = 'Potion'
         self.change = random.randint(1, 5)
     def useItem(self, pc):
         pc.modWis(self.change)
         pc.removeInventory(self)
         return 0
-class aSword(items):
+class weapon(items):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+        self.symbol = '?' if random.randint(0, 10) < 7 else u'\u2020'
+class aSword(weapon):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'straight Sword'
@@ -158,7 +162,7 @@ class aSword(items):
     	else:
              pc.setEquipped(self)
              return 0
-class aBow(items):
+class aBow(weapon):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'short bow'
@@ -169,7 +173,7 @@ class aBow(items):
     	else:
              pc.setEquipped(self)
              return 0
-class aStaff(items):
+class aStaff(weapon):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'wooden staff'

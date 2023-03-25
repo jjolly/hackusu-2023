@@ -1,5 +1,6 @@
 import room
 import creatures
+import random
 
 def setCharAt(board, x, y, ch):
     line = board[y + 1]
@@ -42,9 +43,10 @@ class Game:
         for ob in self.room.getPillars():
             setCharAt(board, ob[0], ob[1], '*')
         for item in self.room.getItems():
-            setCharAt(board, item.x, item.y, '+')
+            setCharAt(board, item.x, item.y, item.symbol)
+        montypes = {'orc': '0', 'spider': 's', 'skeleton': 'k'}
         for mon in self.room.getMonsters():
-            setCharAt(board, mon.x, mon.y, '@')
+            setCharAt(board, mon.x, mon.y, montypes[mon.getType()])
         if self.room.getEndCondition():
             exitPos = self.room.returnExit()
             setCharAt(board, exitPos[0], exitPos[1], '#')
