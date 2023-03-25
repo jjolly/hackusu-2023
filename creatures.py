@@ -80,10 +80,10 @@ class monster(creatures):
         self.strength = ['orc']
         self.dexterity = ['spider', 'skeleton']
         self.wisdom = []
-        self.hp = self.hp ** (depth/5)
-        self.str = self.str ** (depth/2)
-        self.dex = self.dex ** (depth/3)
-        self.wis = self.wis ** (depth/2)
+        self.hp = self.hp ** (depth)
+        self.str = (self.str ** (depth))/2+1
+        self.dex = (self.dex ** (depth))/5+1
+        self.wis = (self.wis ** (depth))/3+1
         self.x = x
         self.y = y
         self.id = ID
@@ -112,7 +112,7 @@ class pc(creatures):
             'wizard':items.aStaff,
             }
         self.secretHealth = self.hp
-        self.secretStarter = starters[ty]
+        self.secretStarter = starters[ty](0, 1, 0, 0)
         self.level = 1
         self.exp = 0
         self.x = 1
