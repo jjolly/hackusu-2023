@@ -23,10 +23,11 @@ def play_step(game):
     stats = game.getStats()
     print(f"HP: {stats['hp']}, Str: {stats['str']}, Dex: {stats['dex']}, Wis: {stats['wis']}, Exp: {stats['exp']}")
     inv = ''
-    for item in stats['inv']:
+    for i in range(len(stats['inv'])):
+        item = stats['inv'][i]
         if len(inv) > 0:
             inv += ', '
-        inv += item
+        inv += f'{i + 1}:{item}'
     print(f'Inventory: {inv}')
     print("Whatcha wanna do? ", end = "")
     sys.stdout.flush()
