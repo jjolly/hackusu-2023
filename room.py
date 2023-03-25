@@ -110,10 +110,8 @@ class room:
                 self.exit = [tempX,tempY]
     def removeMonster(self, monsterID):
         deleted = False
-        print(len(self.monsters))
         for i in range(0,len(self.monsters)):
             if self.monsters[i].getID() == monsterID:
-                print(i)
                 deleted = True
                 self.monsters.pop(i)
                 break
