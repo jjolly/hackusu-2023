@@ -112,7 +112,7 @@ class pc(creatures):
         self.exp = 0
         self.x = 1
         self.y = 1
-        self.equiped = Null
+        self.equipped = False
         self.inventory = [ty]
     def getInventory(self):
         return self.inventory
@@ -125,7 +125,7 @@ class pc(creatures):
             raise('ATTEMPTING TO USE ITEM THAT DOES NOT EXIST')
     def setEquipped(self, item):
     	self.equipped = item
-    def getEquipped(self, item):
+    def getEquipped(self):
     	return self.equipped
     def attack(self):
     	if self.getEquipped():

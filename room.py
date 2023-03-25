@@ -108,15 +108,13 @@ class room:
                 self.exit = [tempX,tempY]
     def removeMonster(self, monsterID):
         deleted = False
-        for i in range(self.monsters):
+        for i in range(0,len(self.monsters) - 1):
             if self.monsters[i].getID() == monsterID:
                 deleted = True
                 self.monsters.pop(i)
         if len(self.monsters) <= 0:
             self.endCondition = True
             self.setupExit()
-        if not deleted:
-            raise('ATTEMPTING TO DESTROY A MONSTER THAT DOES NOT EXIST')
         return True
     def removeItem(self, itemID):
         deleted = False
