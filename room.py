@@ -111,16 +111,13 @@ class room:
     def removeMonster(self, monsterID):
         deleted = False
         print(len(self.monsters))
-        try:
-            for i in range(0,len(self.monsters)):
-               	if self.monsters[i].getID() == monsterID:
-                     print(i)
-                     deleted = True
-                     self.monsters.pop(i)
-                     break
-        except():
-      	    print(len(self.monsters))
-      	    print(i)
+        for i in range(0,len(self.monsters)):
+            if self.monsters[i].getID() == monsterID:
+                print(i)
+                deleted = True
+                self.monsters.pop(i)
+                break
+        
         if len(self.monsters) <= 0:
             self.endCondition = True
             self.setupExit()
@@ -149,3 +146,57 @@ class room:
                 self.removeItem(i.getID())
                 return True
         raise('ATTEMPTING TO PICK UP AN ITEM THAT DOES NOT EXIST')
+    def monstersTurn(self):
+        for mon in self.monsters:
+            avoid = self.pillars.copy()
+            for i in self.monsters:
+                if i.getID() != mon.getID():
+                     avoid.append(i.getPosition())
+            # avoid is now set up
+            moves = 0
+            while moves < mon.getMove():
+                 monPos = mon.getPosition()
+                 pcPos = pc.getPosition()
+                 distY = abs(monPos[1] - pcPos[1])
+                 distX = abs(monPos[0] - pcPos[0])
+                 looking = True
+                 while looking:
+                      if distY < distX:
+                           if monPos[1] - pcPos[1] < 0:
+                                if [monPos[0], monPos[1]+1] not in avoid:
+                                     mon.setY(monPos[1]+1)
+                                elif [monPos[0] + 1, monPos[1]] not in avoid:
+                                     mon.setX(monPos[0]+1)
+                                elif [monPos[0] - 1, monPos[1]] not in avoid:
+                                     mon.setX(monPos[0]-1)
+                                elif [monPos[0], monPos[1]-1] not in avoid:
+                                     mon.setY(monPos[1]-1)
+                           else:
+                                if [monPos[0], monPos[1]-1] not in avoid:
+                                     mon.setY(monPos[1]-1)
+                                elif [monPos[0] - 1, monPos[1]] not in avoid:
+                                     mon.setX(monPos[0]-1)
+                                elif [monPos[0] + 1, monPos[1]] not in avoid:
+                                     mon.setX(monPos[0]+1)
+                                elif [monPos[0], monPos[1]+1] not in avoid:
+                                     mon.setY(monPos[1]+1)
+                      else:
+                           if monPos[0] - pcPos[0] < 0:
+                                if [monPos[0]+1, monPos[1]] not in avoid:
+                                     mon.setX(monPos[0]+1)
+                                elif [monPos[0], monPos[1]+1] not in avoid:
+                                     mon.setY(monPos[1]+1)
+                                elif [monPos[0], monPos[1]-1] not in avoid:
+                                     mon.setY(monPos[1]-1)
+                                elif [monPos[0]-1, monPos[1]] not in avoid:
+                                     mon.setX(monPos[0]-1)
+                           else:
+                                if [monPos[0]-1, monPos[1]] not in avoid:
+                                     mon.setX(monPos[0]-1)
+                                elif [monPos[0], monPos[1]-1] not in avoid:
+                                     mon.setY(monPos[1]-1)
+                                elif [monPos[0], monPos[1]+1] not in avoid:
+                                     mon.setY(monPos[1]+1)
+                                elif [monPos[0]-1, monPos[1]] not in avoid:
+                                     mon.setX(monPos[0]+1)
+                      moves += 1
