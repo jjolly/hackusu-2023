@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import sys
+import os
 from game import Game
 from getch import getch
 
@@ -15,6 +16,7 @@ def send_command(game, ch):
 
 def play_step(game):
     board = game.getBoard()
+    os.system('clear')
     for line in board:
         print(line)
     print("Whatcha wanna do? ", end = "")
