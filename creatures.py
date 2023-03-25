@@ -95,11 +95,18 @@ class monster(creatures):
         return self.id
     def attack(self):
         if self.getType() in self.strength:
-            return self.str/2
+            return round(self.str/2.5)
         elif self.getType() in self.dexterity:
-            return self.dex/2
+            return (self.dex/2.5)
         elif self.getType() in self.wisdom:
-            return self.wis/2
+            return (self.wis/2.5)
+    def getExp(self):
+        if self.getType() in self.strength:
+            return round(self.str/2)
+        elif self.getType() in self.dexterity:
+            return round(self.dex/2)
+        elif self.getType() in self.wisdom:
+            return round(self.wis/2)
 class pc(creatures):
     def __init__(self, ty = 'sword'):
         super().__init__('fighter')
@@ -113,6 +120,7 @@ class pc(creatures):
         self.x = 1
         self.y = 1
         self.equipped = False
+        self.needed = 10
         self.inventory = [ty]
     def getInventory(self):
         return self.inventory
@@ -130,14 +138,23 @@ class pc(creatures):
     def attack(self):
     	if self.getEquipped():
     		use = self.getEquipped()
-    		return use.useItem(self)
+    		use = use.useItem(self)
+    		return round(use)
     	else:
-    		return self.str/2
+    		return round(self.str/2)
     def attackStr(self, modifier):
         return self.str*modifier/2
     def attackDex(self, modifier):
         return self.dex*modifier/2
     def attackWis(self, modifier):
         return self.wis*modifier/2
+    def addExperience(self, exp):
+    	self.exp += exp
+    	ret = False
+    	if self.exp >= self.needed:
+    		self.needed *= 2.5
+    		ret = True
+    	return ret
+    		
     
         

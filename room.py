@@ -62,6 +62,7 @@ class room:
             self.monsters.append(mon)
             created += 1
         # set up items
+        ids = created
         create = random.randint(1,10)
         created = 0
         self.items = []
@@ -73,9 +74,10 @@ class room:
                 if [tempX, tempY] not in self.pillars:
                     looking = False
                     avoid.append([tempX,tempY])
-            item = items.createItems(self.level, created, tempX, tempY)
+            item = items.createItems(self.level, ids, tempX, tempY)
             self.items.append(mon)
             created += 1
+            ids += 1
         self.level += 1
         self.exit = False
     # getters and setters
@@ -103,22 +105,29 @@ class room:
             tempX = random.randint(1, self.x-1)
             tempY = random.randint(1, self.y-1)
             if [tempX, tempY] not in avoid:
-                self.looking = False
+                looking = False
                 avoid.append([tempX,tempY])
                 self.exit = [tempX,tempY]
     def removeMonster(self, monsterID):
         deleted = False
-        for i in range(0,len(self.monsters) - 1):
-            if self.monsters[i].getID() == monsterID:
-                deleted = True
-                self.monsters.pop(i)
+        print(len(self.monsters))
+        try:
+            for i in range(0,len(self.monsters)):
+               	if self.monsters[i].getID() == monsterID:
+                     print(i)
+                     deleted = True
+                     self.monsters.pop(i)
+                     break
+        except():
+      	    print(len(self.monsters))
+      	    print(i)
         if len(self.monsters) <= 0:
             self.endCondition = True
             self.setupExit()
         return True
     def removeItem(self, itemID):
         deleted = False
-        for i in range(self.items):
+        for i in range(0,len(self.items)):
             if self.items[i].getID() == itemID:
                 deleted = True
                 self.items.pop(i)
