@@ -37,6 +37,28 @@ class items:
         return self.name
     def useItem(self, pc):
         return False
+class scroll(items):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+        self.name = 'Scroll'
+        self.uses = random.randint(1, 5)
+        self.change = random.randint(depth * depth / 2, depth * depth)
+    def getUses(self):
+        return self.uses
+    def getName(self):
+    	return self.name
+class fireball(scroll):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+        self.change = random.randint(depth * depth, depth * depth*2)
+    def useItem(self, pc):
+        rand = random.randint(0,10)
+        if rand == 5:
+            pc.wound(self.change)
+            return 0
+        else:
+            return self.change + rand 
+            
 class healthPotion(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
