@@ -25,6 +25,7 @@ class Game:
         self.event['pillar'] = False
         self.event['mondmg'] = 0
         self.event['mondead'] = False
+        self.event['itemname'] = ''
 
     def getBoard(self):
         x = self.pc.x
@@ -53,12 +54,17 @@ class Game:
             msgs += f'You attacked a {self.event["montype"]} for {self.event["mondmg"]} damage.'
             if self.event['mondead']:
                 msgs += f' You destroyed the {self.event["montype"]}!'
+        if len(self.event['itemname']) > 0:
+            if(len(msgs) > 0):
+                msgs += ' '
+            msgs += f'You picked up a {self.event["itemname"]}.'
         return msgs
 
     def sendCommand(self, cmd):
         self.event['pillar'] = False
         self.event['mondmg'] = 0
         self.event['mondead'] = False
+        self.event['itemname'] = ''
         x = self.pc.x
         y = self.pc.y
         ox = x
@@ -88,6 +94,10 @@ class Game:
                 self.event['montype'] = mon.getType()
                 self.event['mondead'] = self.room.damageMonster(mon.getID(), dmgToMon)
                 break
+        for item in self.room.getItems():
+            if item.x == x and item.y == y:
+                self.room.pickupItem(x, y)
+                self.event['itemname'] = item.getName()
         self.pc.x = x
         self.pc.y = y
     def getStats(self):
