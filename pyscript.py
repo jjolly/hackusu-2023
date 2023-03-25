@@ -6,14 +6,8 @@ from collections import Counter
 
 def onKeyPress(event):
     event.preventDefault()
-    print(event.key)
     send_command(gameObject, event.key) 
 
-
-
-def current_key(key):
-    # Get paragraph element by id
-    return key, 1
 
 
 def send_command(game, ch):
@@ -27,22 +21,31 @@ def send_command(game, ch):
             'ArrowDown': "DOWN",
             'ArrowRight': "RIGHT",
             'i': "INVENTORY",
-            '1': "USE",
-            '2': "USE",
-            '3': "USE",
-            '4': "USE",
-            '5': "USE",
-            '6': "USE",
-            '7': "USE",
-            '8': "USE",
-            '9': "USE"
+            '1': "USE 1",
+            '2': "USE 2",
+            '3': "USE 3",
+            '4': "USE 4",
+            '5': "USE 5",
+            '6': "USE 6",
+            '7': "USE 7",
+            '8': "USE 8",
+            '9': "USE 9",
+            '!': "REMOVE 1",
+            '@': "REMOVE 2",
+            '#': "REMOVE 3",
+            '$': "REMOVE 4",
+            '%': "REMOVE 5",
+            '^': "REMOVE 6",
+            '&': "REMOVE 7",
+            '*': "REMOVE 8",
+            '()': "REMOVE 9"
         }
     if ch in cmd:
         cmdword = cmd[ch]
         if cmdword == "INVENTORY":
             draw_messages(game, Element("console"), ch)
-        elif cmdword == "USE":
-            commandString = f"USE {ch}"
+        elif cmdword[:-2] == "USE" or cmdword[:-2] == "REMOVE":
+            commandString = cmdword
             game.sendCommand(commandString)
         else:
             game.sendCommand(cmdword)
