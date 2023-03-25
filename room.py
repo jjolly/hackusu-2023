@@ -11,7 +11,7 @@ level
 items
 '''
 import random
-import creature
+import creatures
 import items
 class room:
     __slots__ = ['x', 'y', 'pillars', 'pc', 'endCondition', 'monsters', 'level', 'items',]
@@ -19,13 +19,12 @@ class room:
         self.level = 0
         self.pc = pc
         self.createNewRoom()
-    def createNewRoom(self)
+    def createNewRoom(self):
         # set up room size and level
         self.x = random.randint(20, 35)
         self.y = random.randint(10, 15)
-        self.level = level
         # set up pillars
-        create = self.random(1,20)
+        create = random.randint(1,20)
         self.pillars = []
         for i in range(create):
             tempX = random.randint(1, self.x-1)
@@ -42,12 +41,12 @@ class room:
         self.pc.setX(tempX)
         self.pc.setY(tempY)
         # set up where to avoid
-        avoid = self.pillars.copy
+        avoid = self.pillars.copy()
         avoid.append([tempX, tempY])
         # set up end condition
         self.endCondition = False
         # set up monsters
-        create = self.random(1,10)
+        create = random.randint(1,10)
         created = 0
         self.monsters = []
         while (created < create):
@@ -61,7 +60,7 @@ class room:
             mon = creature.randomMonster(self.level, created, tempX, tempY)
             sel.monsters.append(mon)
         # set up items
-        create = self.random(1,10)
+        create = random.randint(1,10)
         created = 0
         self.items = []
         while (created < create):
