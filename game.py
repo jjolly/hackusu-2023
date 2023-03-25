@@ -29,6 +29,7 @@ class Game:
         self.event['itemname'] = ''
         self.event['used'] = ''
         self.event['burdened'] = False
+        self.event['died'] = False
         self.dir = '^'
 
     def getBoard(self):
@@ -75,6 +76,10 @@ class Game:
             if(len(msgs) > 0):
                 msgs += ' '
             msgs += f'You have too much stuff! Drink a potion, cast a spell, drop trash, something!'
+        if self.event['died']:
+            if(len(msgs) > 0):
+                msgs += ' '
+            msgs += 'You died. Yet the world continues. A new adventurer enters another dungeon'
         return msgs
 
     def sendCommand(self, cmd):
@@ -85,6 +90,7 @@ class Game:
         self.event['itemname'] = ''
         self.event['used'] = ''
         self.event['burdened'] = False
+        self.event['died'] = False
         x = self.pc.x
         y = self.pc.y
         ox = x
@@ -110,6 +116,10 @@ class Game:
                             self.event['montype'] = mon.getType()
                             self.event['mondead'] = self.room.damageMonster(mon.getID(), dmg)
                             break
+                if self.pc.getHP() < 0:
+                    self.room.reset()
+                    self.event['died'] = True
+
         if len(cmd) > 7 and cmd[:7] == "REMOVE ":
             inum = int(cmd[7:])
             inv = self.pc.getInventory()
