@@ -11,6 +11,15 @@ class createItems:
             items,
             healthPotion,
             woundingPotion,
+            drainStrPotion,
+            addStrPotion,
+            drainDexPotion,
+            addDexPotion,
+            drainWisPotion,
+            addWisPotion,
+            aSword,
+            aStaff,
+            aBow,
             ]
         do = randint(0, len(itemOptions))
         return itemOptions[do](depth, ID, x, y)
@@ -33,6 +42,7 @@ class healthPotion(items):
         self.change = random.randint(depth, 2*(depth+1))
     def useItem(self, pc):
         pc.wound(-self.change)
+        return False
 class woundingPotion(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
@@ -40,3 +50,75 @@ class woundingPotion(items):
         self.change = random.randint(depth, 2*(depth+1))
     def useItem(self, pc):
         pc.wound(self.change)
+        return False
+class drainStrPotion(items):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+        self.name = 'Potion'
+        self.change = random.randint(-2, -1)
+    def useItem(self, pc):
+        pc.modStr(self.change)
+        return False
+class addStrPotion(items):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+        self.name = 'Potion'
+        self.change = random.randint(1, 2)
+    def useItem(self, pc):
+        pc.modStr(self.change)
+        return False
+class drainDexPotion(items):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+        self.name = 'Potion'
+        self.change = random.randint(-2, -1)
+    def useItem(self, pc):
+        pc.modDex(self.change)
+        return False
+class addDexPotion(items):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+        self.name = 'Potion'
+        self.change = random.randint(1, 2)
+    def useItem(self, pc):
+        pc.modDex(self.change)
+        return False
+class drainWisPotion(items):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+        self.name = 'Potion'
+        self.change = random.randint(-2, -1)
+    def useItem(self, pc):
+        pc.modWis(self.change)
+        return False
+class addWisPotion(items):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+        self.name = 'Potion'
+        self.change = random.randint(1, 2)
+    def useItem(self, pc):
+        pc.modWis(self.change)
+        return False
+class aSword(items):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+        self.name = 'straight Sword'
+        self.modifier = 2
+    def useItem(self, pc):
+        return pc.attackStr(self.modifier)
+class aBow(items):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+        self.name = 'short bow'
+        self.modifier = 2
+    def useItem(self, pc):
+        return pc.attackDex(self.modifier)
+class aStaff(items):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+        self.name = 'wooden staff'
+        self.modifier = 2
+    def useItem(self, pc):
+        return pc.attackWis(self.modifier)
+
+    

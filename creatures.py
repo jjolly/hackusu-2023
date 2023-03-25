@@ -14,6 +14,7 @@ type
 inventory
 '''
 import random
+import items
 class randomMonster:
     def __init__(self,depth, ID, x, y):
         types = ['spider',
@@ -93,6 +94,11 @@ class monster(creatures):
             return self.wis/2
 class pc(creatures):
     def __init__(self, ty = 'sword'):
+        starters = {
+            'sword':items.aSword,
+            'bow':items.aBow,
+            'staff':items.aStaff,
+            }
         self.level = 1
         self.exp = 0
         self.x = 1
@@ -104,8 +110,14 @@ class pc(creatures):
         self.inventory.append(item)
     def getItem(self, index):
         if index < len(self.inventory):
-            return self.inventory[index]
+            return self.inventory[starters[ty]()]
         else:
             raise('ATTEMPTING TO USE ITEM THAT DOES NOT EXIST')
+    def attackStr(self, modifier):
+        return self.str*modifier/2
+    def attackDex(self, modifier):
+        return self.dex*modifier/2
+    def attackWis(self, modifier):
+        return self.wis*modifier/2
     
         
