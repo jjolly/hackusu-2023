@@ -80,10 +80,10 @@ class monster(creatures):
         self.strength = ['orc']
         self.dexterity = ['spider', 'skeleton']
         self.wisdom = []
-        self.hp = self.hp ** depth
-        self.str = self.str ** depth
-        self.dex = self.dex ** depth
-        self.wis = self.wis ** depth
+        self.hp = self.hp ** (depth/7)
+        self.str = self.str ** (depth/4)
+        self.dex = self.dex ** (depth/6)
+        self.wis = self.wis ** (depth/5)
         self.x = x
         self.y = y
         self.id = ID
