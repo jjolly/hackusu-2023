@@ -12,25 +12,59 @@
     <body>
         <p id="key-pressed-pyscript" py-onKeyDown="onKeyPress()"></p>
 
+        <div id="game-screen" style="white-space: pre;font-family: monospace; width: 300px; margin: auto;;" py-onKeyDown="send_command">
+
+        </div>
+        
+        <py-config type="toml">
+          [[fetch]]
+          files = ["./game.py"]
+      </py-config>
 
         <py-script>
-            from pyodide.ffi import create_proxy
             from pyscript import Element
+            from pyodide.ffi import create_proxy
+            from game import Game
 
             def onKeyPress(event):
                 event.preventDefault();
-                current_key(event.key)
+                
+                send_command(gameObject, event.key)
 
 
 
             def current_key(key):
                 # Get paragraph element by id
-                paragraph = Element("key-pressed-pyscript")
+                return key, 1
 
-                # Add current time to the paragraph element
-                paragraph.write(key)
 
+            def send_command(game, ch):
+              cmd = {
+                      'w': "UP",
+                      'a': "LEFT",
+                      's': "DOWN",
+                      'd': "RIGHT"
+                    }
+              if ch in cmd:
+                  game.sendCommand(cmd[ch])
+                  draw_board(game, Element("game-screen"))
+
+            def draw_board(game, window):
+              board = game.getBoard()
+              stringBoard = ""
+              for line in board:
+                stringBoard = stringBoard + "\n" + line
+              window.write(stringBoard)
+            
+
+            gameObject = Game()
+            draw_board(gameObject, Element("game-screen"))
+            
             js.document.addEventListener('keydown', create_proxy(onKeyPress))
+    
+   
+              
+
         </py-script>
     </body>
 </html>
