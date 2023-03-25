@@ -120,7 +120,7 @@ class pc(creatures):
         self.needed = 10
         self.inventory = [starters[ty](0, 1, 0, 0)]
     def getInventory(self):
-        return self.inventory
+        return self.inventory[1:]
     def addInventory(self, item):
         self.inventory.append(item)
     def findItem(self, item):
