@@ -37,17 +37,25 @@ class Game:
             setCharAt(board, ob[0], ob[1], '*')
         for mon in self.room.getMonsters():
             setCharAt(board, mon.x, mon.y, '@')
-        if self.event['pillar']:
-            board += breakAt('Ouch! You can\'t go that way!', len(board[0]))
-            self.event['pillar'] = False
-        if self.event['mondmg'] > 0:
-            board += breakAt(f'You attacked a {self.event["montype"]} for {self.event["monster"]} damage', len(board[0]))
-            self.event['monster'] = 0
-            if self.event['mondead']:
-                board += breakAt(f'You destroyed the {self.event["montype"]}')
         return board
 
+    def getMessages(self):
+        msgs = ''
+        if self.event['pillar']:
+            if(len(msgs) > 0):
+                msgs += ' '
+            msgs += breakAt('Ouch! You can\'t go that way!', len(board[0]))
+        if self.event['mondmg'] > 0:
+            if(len(msgs) > 0):
+                msgs += ' '
+            msgs += breakAt(f'You attacked a {self.event["montype"]} for {self.event["monster"]} damage.', len(board[0]))
+            if self.event['mondead']:
+                msgs += breakAt(f' You destroyed the {self.event["montype"]}!')
+
     def sendCommand(self, cmd):
+        self.event['pillar'] = False
+        self.event['mondmg'] = 0
+        self.event['mondead'] = False
         x = self.pc.x
         y = self.pc.y
         ox = x
