@@ -43,6 +43,9 @@ class Game:
             setCharAt(board, item.x, item.y, '+')
         for mon in self.room.getMonsters():
             setCharAt(board, mon.x, mon.y, '@')
+        if self.room.getEndCondition():
+            exitPos = self.room.returnExit()
+            setCharAt(board, exitPos[0], exitPos[1], '#')
         return board
 
     def getMessages(self):
@@ -113,6 +116,11 @@ class Game:
         if cmd == "UP" and y > 0:
             self.dir = '^'
             y -= 1
+        if self.room.getEndCondition():
+            endPos = self.room.returnExit()
+            if x == endPos[0] and y == endPos[1]:
+                self.room.createNewRoom()
+                return True
         for ob in self.room.getPillars():
             if ob[0] == x and ob[1] == y:
                 x = ox
