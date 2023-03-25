@@ -6,6 +6,17 @@ def setCharAt(board, x, y, ch):
     line = line[:x + 1] + ch + line[x + 2:]
     board[y + 1] = line
 
+def breakAt(string, length):
+    ret = []
+    while len(string) > length:
+        br = length
+        while string[br] not in ' ':
+            br -= 1
+        ret.append(string[:br])
+        string = string[br+1:]
+    ret.append(string)
+    return ret
+
 class Game:
     def __init__(self):
         self.pc = creatures.pc()
@@ -26,10 +37,10 @@ class Game:
         for mon in self.room.getMonsters():
             setCharAt(board, mon.x, mon.y, '@')
         if self.event['pillar']:
-            board.append('Ouch! You can\'t go that way!')
+            board += breakAt('Ouch! You can\'t go that way!', len(board[0]))
             self.event['pillar'] = False
         if self.event['monster'] > 0:
-            board.append(f'You attacked the monster for {self.event["monster"]} damage')
+            board += breakAt(f'You attacked the monster for {self.event["monster"]} damage', len(board[0]))
             self.event['monster'] = 0
         return board
 
