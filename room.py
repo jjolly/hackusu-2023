@@ -153,9 +153,10 @@ class room:
                      avoid.append(i.getPosition())
             # avoid is now set up
             moves = 0
+            pcPos = self.pc.getPosition()
             while moves < mon.getMove():
                  monPos = mon.getPosition()
-                 pcPos = self.pc.getPosition()
+                 prev = monPos.copy()
                  if self.calcDistance([monPos[0],monPos[1]+1], pcPos) < self.calcDistance([monPos[0],monPos[1]-1], pcPos):
                      try1 = [monPos[0],monPos[1]-1]
                      try2 = [monPos[0],monPos[1]+1]
@@ -199,6 +200,13 @@ class room:
                      mon.setX(try2[0])
                      mon.setY(try2[1])
                  moves += 1
+            if self.calcDistance(pcPos, mon.getPosition()) == 0:
+                 mon.setX(prev[0])
+                 mon.setY(prev[1])
+                 damage = mon.attack()
+                 self.pc.wound(damage)
+                 if self.pc.getHP() <= 0:
+                     return True
         return False
     def calcDistance(self, loc1, loc2):
         return ((loc1[0]-loc2[0])**2 + (loc1[1]-loc2[1])**2)**(1/2)
