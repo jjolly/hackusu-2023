@@ -61,16 +61,16 @@ class room:
         create = self.random(1,10)
         created = 0
         self.items = []
-##        while (created < create):
-##            looking = False
-##            while (looking):
-##                tempX = random.randint(1, self.x-1)
-##                tempY = random.randint(1, self.y-1)
-##                if [tempX, tempY] not in self.pillars:
-##                    self.looking = True
-##                    avoid.append([tempX,tempY])
-##            item = items.items(self.level, created, tempX, tempY)
-##            sel.items.append(mon)
+        while (created < create):
+            looking = False
+            while (looking):
+                tempX = random.randint(1, self.x-1)
+                tempY = random.randint(1, self.y-1)
+                if [tempX, tempY] not in self.pillars:
+                    self.looking = True
+                    avoid.append([tempX,tempY])
+            item = items.items(self.level, created, tempX, tempY)
+            sel.items.append(mon)
     # getters and setters
     def getPillars(self):
         return self.pillars
@@ -112,6 +112,6 @@ class room:
         for i in self.items:
             if i.x == x and i.y == y:
                 pc.addInventory(i)
-                self.removeItem(i.id)
+                self.removeItem(i.getID())
                 return True
         raise('ATTEMPTING TO PICK UP AN ITEM THAT DOES NOT EXIST')
