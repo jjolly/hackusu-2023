@@ -1,7 +1,36 @@
-<html>
-  <head>
-  </head>
-  <body>
-    <h1>And here we go...</h1>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+        <title>Current Time</title>
+
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    </head>
+    <body>
+        <p id="key-pressed-pyscript" py-onKeyDown="onKeyPress()"></p>
+
+
+        <py-script>
+            from pyodide.ffi import create_proxy
+            from pyscript import Element
+
+            def onKeyPress(event):
+                event.preventDefault();
+                current_key(event.key)
+
+
+
+            def current_key(key):
+                # Get paragraph element by id
+                paragraph = Element("key-pressed-pyscript")
+
+                # Add current time to the paragraph element
+                paragraph.write(key)
+
+            js.document.addEventListener('keydown', create_proxy(onKeyPress))
+        </py-script>
+    </body>
 </html>
