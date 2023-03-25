@@ -44,5 +44,10 @@ class Game:
                 x = ox
                 y = oy
                 break
+        for mon in self.room.getMonsters():
+            if mon.x == x and mon.y == y:
+                x = ox
+                y = oy
+                break
         self.pc.x = x
         self.pc.y = y
