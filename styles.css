@@ -45,10 +45,11 @@
   }
 
   #console {
+    text-align: center;
     padding-right: 10px;
     background-color: grey;
     color: white;
     width: 98.6%;
-    height: 100px; /* Set the height of the console */
+    height: 50px; /* Set the height of the console */
     overflow: hidden; /* Show the scrollbar if necessary */
 }
