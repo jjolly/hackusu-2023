@@ -111,6 +111,8 @@ class pc(creatures):
             'ranger':items.aBow,
             'wizard':items.aStaff,
             }
+        self.secretHealth = self.hp.copy()
+        self.secretStarter = starters[ty]
         self.level = 1
         self.exp = 0
         self.x = 1
@@ -161,6 +163,11 @@ class pc(creatures):
     		self.needed *= 3
     		ret = True
     	return ret
+    def resetEquipped(self)
+         self.inventory.append(self.secretStarter)
+    def resetHealth(self)
+         self.HP = self.secretHealth
+
     		
     
         
