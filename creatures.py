@@ -25,18 +25,25 @@ class randomMonster:
 class creatures:
     def __init__(self, ty):
         self.baseStats ={
-            'sword':[10, 5,4,3],
-            'bow':[7, 4,5,3],
-            'staff':[5,3,4,5],
+            'sword':[10, 5,4,3,1],
+            'bow':[7, 4,5,3,1],
+            'staff':[5,3,4,5,1],
             # monster section
-            'spider':[3,2,3,2],
-            'orc':[6,4,2,2],
-            'skeleton':[2,2,3,1],
+            'spider':[3,2,3,2,3],
+            'orc':[6,4,2,2,1],
+            'skeleton':[2,2,3,1,2],
             }
-        self.hp = self.baseStats[ty][0]
-        self.str = self.baseStats[ty][1]
-        self.dex = self.baseStats[ty][2]
-        self.wis = self.baseStats[ty][3]
+        loc = 0
+        self.hp = self.baseStats[ty][loc]
+        loc += 1
+        self.str = self.baseStats[ty][loc]
+        loc += 1
+        self.dex = self.baseStats[ty][loc]
+        loc += 1
+        self.wis = self.baseStats[ty][loc]
+        loc += 1
+        self.move = self.baseStats[ty][loc]
+        loc += 1
         self.type = ty
     def getHP(self):
         return self.hp
@@ -60,6 +67,8 @@ class creatures:
         self.y = y
     def setX(self, x):
         self.x = x
+    def getMove(self):
+        return self.move
 class monster(creatures):
     def __init__(self,depth, ID, x, y, ty = 'spider'):
         super().__init__(ty)
