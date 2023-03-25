@@ -112,7 +112,7 @@ class pc(creatures):
             'wizard':items.aStaff,
             }
         self.secretHealth = self.hp
-        self.secretStarter = starters[ty](0, 1, 0, 0)
+        self.secretStarter = starters[ty]
         self.level = 1
         self.exp = 0
         self.x = 1
@@ -149,7 +149,7 @@ class pc(creatures):
     	return self.inventory[0]
     def attack(self):
         use = self.getEquipped()
-        return round(use.useItem(self)*(1+self.exp)/40 if use else self.str/2*(1+self.exp)/30)
+        return round(use.useItem(self)*(1+self.exp/30) if use else self.str/2*(1+self.exp/30))
     def attackStr(self, modifier):
         return self.str*modifier/2
     def attackDex(self, modifier):
@@ -164,8 +164,7 @@ class pc(creatures):
     		ret = True
     	return ret
     def resetEquipped(self):
-    
-         self.inventory = [self.secretStarter]
+         self.inventory = [self.secretStarter(0, 1, 0, 0)]
     def resetHealth(self):
          self.hp = random.randint(10,20)
     def wound(self, damage):
