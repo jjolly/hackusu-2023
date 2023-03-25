@@ -128,6 +128,7 @@ class room:
             if self.items[i].getID() == itemID:
                 deleted = True
                 self.items.pop(i)
+                break
         if not deleted:
             raise('ATTEMPTING TO REMOVE AN ITEM THAT DOES NOT EXIST')
         return True
@@ -142,7 +143,7 @@ class room:
     def pickupItem(self, x, y):
         for i in self.items:
             if i.x == x and i.y == y:
-                pc.addInventory(i)
+                self.pc.addInventory(i)
                 self.removeItem(i.getID())
                 return True
         raise('ATTEMPTING TO PICK UP AN ITEM THAT DOES NOT EXIST')
@@ -163,7 +164,12 @@ class room:
                  while looking:
                       if distY < distX:
                            if monPos[1] - pcPos[1] < 0:
-                                if [monPos[0], monPos[1]+1] not in avoid:
+                                if [monPos[0], monPos[1]+1] == self.pc.getPosition():
+                                     damage = mon.attack()
+                                     self.pc.wound(damage)
+                                     if self.pc.getHP() <= 0:
+                                         return True
+                                elif [monPos[0], monPos[1]+1] not in avoid:
                                      mon.setY(monPos[1]+1)
                                 elif [monPos[0] + 1, monPos[1]] not in avoid:
                                      mon.setX(monPos[0]+1)
@@ -172,7 +178,12 @@ class room:
                                 elif [monPos[0], monPos[1]-1] not in avoid:
                                      mon.setY(monPos[1]-1)
                            else:
-                                if [monPos[0], monPos[1]-1] not in avoid:
+                                if [monPos[0], monPos[1]-1] == self.pc.getPosition():
+                                     damage = mon.attack()
+                                     self.pc.wound(damage)
+                                     if self.pc.getHP() <= 0:
+                                         return True
+                                elif [monPos[0], monPos[1]-1] not in avoid:
                                      mon.setY(monPos[1]-1)
                                 elif [monPos[0] - 1, monPos[1]] not in avoid:
                                      mon.setX(monPos[0]-1)
@@ -182,7 +193,12 @@ class room:
                                      mon.setY(monPos[1]+1)
                       else:
                            if monPos[0] - pcPos[0] < 0:
-                                if [monPos[0]+1, monPos[1]] not in avoid:
+                                if [monPos[0]+1, monPos[1]] == self.pc.getPosition():
+                                     damage = mon.attack()
+                                     self.pc.wound(damage)
+                                     if self.pc.getHP() <= 0:
+                                         return True
+                                elif [monPos[0]+1, monPos[1]] not in avoid:
                                      mon.setX(monPos[0]+1)
                                 elif [monPos[0], monPos[1]+1] not in avoid:
                                      mon.setY(monPos[1]+1)
@@ -191,7 +207,12 @@ class room:
                                 elif [monPos[0]-1, monPos[1]] not in avoid:
                                      mon.setX(monPos[0]-1)
                            else:
-                                if [monPos[0]-1, monPos[1]] not in avoid:
+                                if [monPos[0]-1, monPos[1]] == self.pc.getPosition():
+                                     damage = mon.attack()
+                                     self.pc.wound(damage)
+                                     if self.pc.getHP() <= 0:
+                                         return True
+                                elif [monPos[0]-1, monPos[1]] not in avoid:
                                      mon.setX(monPos[0]-1)
                                 elif [monPos[0], monPos[1]-1] not in avoid:
                                      mon.setY(monPos[1]-1)
