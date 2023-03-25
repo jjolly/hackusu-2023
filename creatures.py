@@ -80,10 +80,10 @@ class monster(creatures):
         self.strength = ['orc']
         self.dexterity = ['spider', 'skeleton']
         self.wisdom = []
-        self.hp = self.hp ** (depth/7)
-        self.str = self.str ** (depth/4)
-        self.dex = self.dex ** (depth/6)
-        self.wis = self.wis ** (depth/5)
+        self.hp = self.hp ** (depth/5)
+        self.str = self.str ** (depth/2)
+        self.dex = self.dex ** (depth/3)
+        self.wis = self.wis ** (depth/2)
         self.x = x
         self.y = y
         self.id = ID
@@ -164,7 +164,8 @@ class pc(creatures):
     		ret = True
     	return ret
     def resetEquipped(self):
-         self.inventory.append(self.secretStarter)
+    
+         self.inventory = [self.secretStarter]
     def resetHealth(self):
          self.HP = self.secretHealth
     def wound(self, damage):
