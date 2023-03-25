@@ -115,32 +115,39 @@ class pc(creatures):
         self.exp = 0
         self.x = 1
         self.y = 1
-        self.equipped = False
         self.needed = 10
         self.inventory = [starters[ty](0, 1, 0, 0)]
     def getInventory(self):
         return self.inventory
     def addInventory(self, item):
         self.inventory.append(item)
+    def findItem(self, item):
+        for i in range(len(self.inventory)):
+            if item.getID() == self.inventory[i].getID():
+                return i
+        return -1
+    def removeInventory(self, item):
+        i = self.findItem(item)
+        if i > 0:
+            del self.inventory[i]
     def getItem(self, index):
         if index < len(self.inventory):
-            return self.inventory[starters[ty]()]
+            return self.inventory[index]
         else:
             raise('ATTEMPTING TO USE ITEM THAT DOES NOT EXIST')
     def setEquipped(self, item):
-    	if self.equipped:
-    	     self.inventory.append(self.equipped)
-    	self.equipped = item
-    	self.inventory.remove(item)
+        i = self.findItem(item)
+        if i > 0:
+            self.inventory[i] = self.inventory[0]
+        self.inventory[0] = item
+    def setUnequipped(self):
+        self.inventory.append(self.inventory[0])
+        self.inventory[0] = None
     def getEquipped(self):
-    	return self.equipped
+    	return self.inventory[0]
     def attack(self):
-    	if self.getEquipped():
-    		use = self.getEquipped()
-    		use = use.useItem(self)
-    		return round(use)
-    	else:
-    		return round(self.str/2)
+        use = self.getEquipped()
+        return round(use.useItem(self) if use else self.str/2)
     def attackStr(self, modifier):
         return self.str*modifier/2
     def attackDex(self, modifier):
