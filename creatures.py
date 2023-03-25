@@ -129,6 +129,7 @@ class pc(creatures):
             raise('ATTEMPTING TO USE ITEM THAT DOES NOT EXIST')
     def setEquipped(self, item):
     	self.equipped = item
+    	self.inventory.remove(item)
     def getEquipped(self):
     	return self.equipped
     def attack(self):

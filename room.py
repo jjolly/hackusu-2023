@@ -74,7 +74,7 @@ class room:
                 if [tempX, tempY] not in self.pillars:
                     looking = False
                     avoid.append([tempX,tempY])
-            item = items.createItems(self.level, ids, tempX, tempY)
+            item = items.createItems(self.level, ids, tempX, tempY).getStore()
             self.items.append(item)
             created += 1
             ids += 1

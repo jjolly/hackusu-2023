@@ -20,6 +20,8 @@ class createItems:
             aSword,
             aStaff,
             aBow,
+            fireball,
+            firebolt,
             ]
         do = random.randint(0, len(itemOptions) - 1)
         self.store = itemOptions[do](depth, ID, x, y)
@@ -52,12 +54,20 @@ class fireball(scroll):
         super().__init__(depth, ID, x, y)
         self.change = random.randint(depth * depth, depth * depth*2)
     def useItem(self, pc):
+        self.uses -= 1
         rand = random.randint(0,10)
         if rand == 5:
             pc.wound(self.change)
             return 0
         else:
             return self.change + rand 
+class firebolt(scroll):
+    def __init__(self, depth, ID, x, y):
+        super().__init__(depth, ID, x, y)
+    def useItem(self, pc):
+    	rand = random.randint(0,5)
+    	self.uses -= 1
+    	return self.change + rand 
             
 class healthPotion(items):
     def __init__(self, depth, ID, x, y):
@@ -129,20 +139,29 @@ class aSword(items):
         self.name = 'straight Sword'
         self.modifier = 2
     def useItem(self, pc):
-        return pc.attackStr(self.modifier)
+    	if self == pc.getEquipped():
+             return pc.attackStr(self.modifier)
+    	else:
+             pc.setEquipped(self)
 class aBow(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'short bow'
         self.modifier = 2
     def useItem(self, pc):
-        return pc.attackDex(self.modifier)
+    	if self == pc.getEquipped():
+             return pc.attackDex(self.modifier)
+    	else:
+             pc.setEquipped(self)
 class aStaff(items):
     def __init__(self, depth, ID, x, y):
         super().__init__(depth, ID, x, y)
         self.name = 'wooden staff'
         self.modifier = 2
     def useItem(self, pc):
-        return pc.attackWis(self.modifier)
+    	if self == pc.getEquipped():
+             return pc.attackWis(self.modifier)
+    	else:
+             pc.setEquipped(self)
 
     
