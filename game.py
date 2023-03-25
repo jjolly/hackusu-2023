@@ -126,4 +126,6 @@ class Game:
         ret['wis'] = stat[2]
         ret['exp'] = self.pc.exp
         ret['inv'] = [n.getName() for n in self.pc.getInventory()]
+        wep = self.pc.getEquipped()
+        ret['wep'] = wep.getName() if wep else "None"
         return ret
