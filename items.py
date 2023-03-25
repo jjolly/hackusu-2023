@@ -44,7 +44,7 @@ class scroll(items):
         super().__init__(depth, ID, x, y)
         self.name = 'Scroll'
         self.uses = random.randint(1, 5)
-        self.change = random.randint(depth * depth / 2, depth * depth)
+        self.change = random.randint(int(depth * depth / 2), depth * depth)
     def getUses(self):
         return self.uses
     def getName(self):
