@@ -167,7 +167,7 @@ class pc(creatures):
     
          self.inventory = [self.secretStarter]
     def resetHealth(self):
-         self.HP = self.secretHealth
+         self.HP = random.randint(10,20)
     def wound(self, damage):
         self.hp -= (damage - self.exp/25)
     		
