@@ -113,6 +113,8 @@ class room:
         for i in range(0,len(self.monsters)):
             if self.monsters[i].getID() == monsterID:
                 deleted = True
+                exp = self.monsters[i].getExp()
+                self.pc.addExperience(exp)
                 self.monsters.pop(i)
                 break
         
