@@ -15,7 +15,11 @@ import creature
 import items
 class room:
     __slots__ = ['x', 'y', 'pillars', 'pc', 'endCondition', 'monsters', 'level', 'items',]
-    def __init__(self, pc, level):
+    def __init__(self, pc):
+        self.level = 0
+        self.pc = pc
+        self.createNewRoom()
+    def createNewRoom(self)
         # set up room size and level
         self.x = random.randint(20, 35)
         self.y = random.randint(10, 15)
@@ -29,7 +33,6 @@ class room:
             if [tempX,tempY] not in self.pillars:
                 self.pillars.append([tempX, tempY])
         # set up player and location
-        self.pc = pc
         looking = False
         while (looking):
             tempX = random.randint(1, self.x-1)
@@ -69,8 +72,9 @@ class room:
                 if [tempX, tempY] not in self.pillars:
                     self.looking = True
                     avoid.append([tempX,tempY])
-            item = items.items(self.level, created, tempX, tempY)
+            item = items.createItems(self.level, created, tempX, tempY)
             sel.items.append(mon)
+        self.level += 1
     # getters and setters
     def getPillars(self):
         return self.pillars
