@@ -32,12 +32,12 @@ class room:
             if [tempX,tempY] not in self.pillars:
                 self.pillars.append([tempX, tempY])
         # set up player and location
-        looking = False
+        looking = True
         while (looking):
             tempX = random.randint(1, self.x-1)
             tempY = random.randint(1, self.y-1)
             if [tempX, tempY] not in self.pillars:
-                self.looking = True
+                looking = False
         self.pc.setX(tempX)
         self.pc.setY(tempY)
         # set up where to avoid
