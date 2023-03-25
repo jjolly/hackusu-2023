@@ -47,9 +47,8 @@ def draw_stats(game, window):
     window.write(stringStats)
 
 def draw_messages(game, window):
-    message = game.getMessages()
-    window.write(message)
-
+    messages = game.getMessages()
+    window.write(messages)
 
 gameObject = Game()
 draw_board(gameObject, Element("game-screen"))
