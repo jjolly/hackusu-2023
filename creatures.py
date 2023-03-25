@@ -29,6 +29,11 @@ class randomMonster:
 class creatures:
     def __init__(self, ty):
         self.baseStats ={
+            # character classes
+            'fighter':[random.randint(10,20), random.randint(12,19), random.randint(8,15), random.randint(3, 10), 2],
+            'wizard':[random.randint(5,10), random.randint(3,10), random.randint(8,15), random.randint(12, 19), 1],
+            'ranger':[random.randint(7,15), random.randint(8,15), random.randint(12,19), random.randint(3, 10), 3],
+            # items
             'sword':[10, 5,4,3,1],
             'bow':[7, 4,5,3,1],
             'staff':[5,3,4,5,1],
@@ -97,6 +102,7 @@ class monster(creatures):
             return self.wis/2
 class pc(creatures):
     def __init__(self, ty = 'sword'):
+        super().__init__('fighter')
         starters = {
             'sword':items.aSword,
             'bow':items.aBow,
