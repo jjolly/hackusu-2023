@@ -73,3 +73,13 @@ class Game:
                 break
         self.pc.x = x
         self.pc.y = y
+    def getStats(self):
+        ret = {}
+        ret['hp'] = self.pc.getHP()
+        stat = self.pc.getStats()
+        ret['str'] = stat[0]
+        ret['dex'] = stat[1]
+        ret['wis'] = stat[2]
+        ret['exp'] = self.pc.exp
+        ret['inv'] = self.pc.getInventory()
+        return ret
