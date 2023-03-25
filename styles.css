@@ -1,0 +1,10 @@
+#game-background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Set a height to the parent div for vertical centering to work */
+  }
+  
+  #game-screen p {
+    text-align: center; /* Center the content horizontally */
+  }

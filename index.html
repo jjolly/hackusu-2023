@@ -6,14 +6,15 @@
 
         <title>Current Time</title>
 
+        <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
         <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     </head>
     <body>
         <p id="key-pressed-pyscript" py-onKeyDown="onKeyPress()"></p>
 
-        <div id="game-screen" style="white-space: pre;font-family: monospace; width: 300px; margin: auto;;" py-onKeyDown="send_command">
-
+        <div id="game-background" style="background-color: black; white-space: pre;font-family: monospace; width: 500px; height: 500px; margin: auto;" py-onKeyDown="send_command">
+          <p id="game-screen" style="color: white"></p>
         </div>
         
         <py-config type="toml">
