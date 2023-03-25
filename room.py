@@ -14,7 +14,7 @@ import random
 import creatures
 import items
 class room:
-    __slots__ = ['x', 'y', 'pillars', 'pc', 'endCondition', 'monsters', 'level', 'items',]
+    __slots__ = ['x', 'y', 'pillars', 'pc', 'endCondition', 'monsters', 'level', 'items', 'exit']
     def __init__(self, pc):
         self.level = 0
         self.pc = pc
@@ -57,8 +57,10 @@ class room:
                 if [tempX, tempY] not in self.avoid:
                     self.looking = True
                     avoid.append([tempX,tempY])
-            mon = creature.randomMonster(self.level, created, tempX, tempY)
-            sel.monsters.append(mon)
+            mon = creatures.randomMonster(self.level, created, tempX, tempY)
+            mon = mon.getStore()
+            self.monsters.append(mon)
+            created += 1
         # set up items
         create = random.randint(1,10)
         created = 0
@@ -72,7 +74,8 @@ class room:
                     self.looking = True
                     avoid.append([tempX,tempY])
             item = items.createItems(self.level, created, tempX, tempY)
-            sel.items.append(mon)
+            self.items.append(mon)
+            created += 1
         self.level += 1
         self.exit = False
     # getters and setters

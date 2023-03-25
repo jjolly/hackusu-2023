@@ -21,8 +21,10 @@ class createItems:
             aStaff,
             aBow,
             ]
-        do = randint(0, len(itemOptions))
-        return itemOptions[do](depth, ID, x, y)
+        do = random.randint(0, len(itemOptions))
+        self.store = itemOptions[do](depth, ID, x, y)
+    def getStore(self):
+        return self.store 
 class items:
     def __init__(self, depth, ID, x, y):
         self.x = x

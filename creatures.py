@@ -21,8 +21,11 @@ class randomMonster:
                  'orc',
                  'skeleton',
                  ]
-        use = random.randint(0, len(types))
-        return monster(depth, ID, x, y, types[use])
+        use = random.randint(0, len(types) - 1)
+        use = types[use]
+        self.store = monster(depth, ID, x, y, use)
+    def getStore(self):
+        return self.store
 class creatures:
     def __init__(self, ty):
         self.baseStats ={
