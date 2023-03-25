@@ -4,18 +4,35 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-        <title>Current Time</title>
+        <title>Rouge Like</title>
 
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
         <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     </head>
-    <body>
-        <p id="key-pressed-pyscript" py-onKeyDown="onKeyPress()"></p>
 
-        <div id="game-background" style="background-color: black; white-space: pre;font-family: monospace; width: 500px; height: 500px; margin: auto;" py-onKeyDown="send_command">
+    
+    <body style="background-color: skyblue;">
+        <header style="">Rogue Like</header>
+
+      <div class="wrapper">
+        <div class="left-div">
+          <span>Movement Controls:</span> 
+          <hr>
+          <span>w,a,s,d or Arrow keys</span>
+        </div>
+        <div id="game-background" style="background-color: black; white-space: pre;font-family: monospace; margin: auto;" py-onKeyDown="send_command">
           <p id="game-screen" style="color: white"></p>
         </div>
+        <div class="right-div" style="white-space: pre;">
+          <span id="stats" style="color: black"></span>
+        </div>
+      </div>
+
+      <div>
+        <textarea id="console"></textarea>
+      </div>
+
         
         <py-config type="toml">
           [[fetch]]
@@ -44,22 +61,41 @@
                       'w': "UP",
                       'a': "LEFT",
                       's': "DOWN",
-                      'd': "RIGHT"
+                      'd': "RIGHT",
+                      'ArrowUp': "UP",
+                      'ArrowLeft': "LEFT",
+                      'ArrowDown': "DOWN",
+                      'ArrowRight': "RIGHT"
                     }
               if ch in cmd:
                   game.sendCommand(cmd[ch])
                   draw_board(game, Element("game-screen"))
+                  draw_stats(game, Element("stats"))
+                  draw_messages(game, Element("console"))
 
             def draw_board(game, window):
               board = game.getBoard()
               stringBoard = ""
               for line in board:
-                stringBoard = stringBoard + "\n" + line
+                stringBoard += "\n" + line
               window.write(stringBoard)
+
+            def draw_stats(game, window):
+              playerStats = game.getStats()
+              stringStats = ""
+              for key in playerStats:
+                value = playerStats[key]
+                stringStats += "\n" + key + " : " + str(value)
+              window.write(stringStats)
+
+            def draw_messages(game, window):
+              message = game.getMessages()
+              window.write(message)
             
 
             gameObject = Game()
             draw_board(gameObject, Element("game-screen"))
+            draw_stats(gameObject, Element("stats"))
             
             js.document.addEventListener('keydown', create_proxy(onKeyPress))
     
