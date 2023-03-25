@@ -28,6 +28,7 @@ class Game:
         self.event['mondead'] = False
         self.event['itemname'] = ''
         self.event['used'] = ''
+        self.event['burdened'] = False
         self.dir = '^'
 
     def getBoard(self):
@@ -36,7 +37,6 @@ class Game:
         w = self.room.x
         h = self.room.y
         board = ['+' + '=' * w + '+'] + ['|' + ' ' * w + '|'] * h + ['+' + '=' * w + '+']
-        setCharAt(board, x, y, self.dir)
         for ob in self.room.getPillars():
             setCharAt(board, ob[0], ob[1], '*')
         for item in self.room.getItems():
@@ -46,6 +46,7 @@ class Game:
         if self.room.getEndCondition():
             exitPos = self.room.returnExit()
             setCharAt(board, exitPos[0], exitPos[1], '#')
+        setCharAt(board, x, y, self.dir)
         return board
 
     def getMessages(self):
@@ -70,6 +71,10 @@ class Game:
             if(len(msgs) > 0):
                 msgs += ' '
             msgs += f'Just used a {self.event["used"]}.'
+        if self.event['burdened']:
+            if(len(msgs) > 0):
+                msgs += ' '
+            msgs += f'You have too much stuff! Drink a potion, cast a spell, drop trash, something!'
         return msgs
 
     def sendCommand(self, cmd):
@@ -79,6 +84,7 @@ class Game:
         self.event['mondead'] = False
         self.event['itemname'] = ''
         self.event['used'] = ''
+        self.event['burdened'] = False
         x = self.pc.x
         y = self.pc.y
         ox = x
@@ -138,8 +144,11 @@ class Game:
                 break
         for item in self.room.getItems():
             if item.x == x and item.y == y:
-                self.room.pickupItem(x, y)
-                self.event['itemname'] = item.getName()
+                if len(self.pc.getInventory()) < 9:
+                    self.room.pickupItem(x, y)
+                    self.event['itemname'] = item.getName()
+                else:
+                    self.event['burdened'] = True
         self.pc.x = x
         self.pc.y = y
         return not self.room.monstersTurn()
