@@ -3,10 +3,21 @@ from pyodide.ffi import create_proxy
 from game import Game
 from collections import Counter
 
+
 def onKeyPress(event):
-    event.preventDefault();
-    send_command(gameObject, event.key)
+    event.preventDefault()
     
+    check = send_command(gameObject, event.key) 
+    if check == False:
+        js.document.removeEventListener("keydown", create_proxy(onKeyPress))
+        Element('game-screen').write('')
+        start_game()
+
+
+def start_game():
+    game = Game()
+    js.document.addEventListener('keydown', create_proxy(onKeyPress))
+    return game
 
 def current_key(key):
     # Get paragraph element by id
@@ -23,11 +34,28 @@ def send_command(game, ch):
             'ArrowLeft': "LEFT",
             'ArrowDown': "DOWN",
             'ArrowRight': "RIGHT",
-            'i': "INVENTORY"
+            'i': "INVENTORY",
+            '1': "USE",
+            '2': "USE",
+            '3': "USE",
+            '4': "USE",
+            '5': "USE",
+            '6': "USE",
+            '7': "USE",
+            '8': "USE",
+            '9': "USE"
         }
     if ch in cmd:
         cmdword = cmd[ch]
-        game.sendCommand(cmdword)
+        if cmdword == "INVENTORY":
+            draw_messages(game, Element("console"), ch)
+        elif cmdword == "USE":
+            commandString = f"USE {ch}"
+            game.sendCommand(commandString)
+        else:
+            test = game.sendCommand(cmdword)
+            print(test)
+            game.sendCommand(cmdword)
         draw_board(game, Element("game-screen"))
         draw_stats(game, Element("stats"))
         draw_messages(game, Element("console"), ch)
@@ -66,7 +94,7 @@ def draw_messages(game, window, ch):
         window.write(inventoryString)
 
 
-gameObject = Game()
+gameObject = start_game()
 draw_board(gameObject, Element("game-screen"))
 draw_stats(gameObject, Element("stats"))
 
