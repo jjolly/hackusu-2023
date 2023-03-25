@@ -98,5 +98,5 @@ class Game:
         ret['dex'] = stat[1]
         ret['wis'] = stat[2]
         ret['exp'] = self.pc.exp
-        ret['inv'] = self.pc.getInventory()
+        ret['inv'] = [n.getName() for n in self.pc.getInventory()]
         return ret
