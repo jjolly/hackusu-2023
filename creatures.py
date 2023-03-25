@@ -53,7 +53,7 @@ class creatures:
         loc += 1
         self.move = self.baseStats[ty][loc]
         loc += 1
-        self.type = ty
+        self.ty = ty
     def getHP(self):
         return self.hp
     def wound(self, damage):
@@ -112,6 +112,7 @@ class pc(creatures):
         self.exp = 0
         self.x = 1
         self.y = 1
+        self.equiped = Null
         self.inventory = [ty]
     def getInventory(self):
         return self.inventory
@@ -122,6 +123,16 @@ class pc(creatures):
             return self.inventory[starters[ty]()]
         else:
             raise('ATTEMPTING TO USE ITEM THAT DOES NOT EXIST')
+    def setEquipped(self, item):
+    	self.equipped = item
+    def getEquipped(self, item):
+    	return self.equipped
+    def attack(self):
+    	if self.getEquipped():
+    		use = self.getEquipped()
+    		return use.useItem(self)
+    	else:
+    		return self.str/2
     def attackStr(self, modifier):
         return self.str*modifier/2
     def attackDex(self, modifier):

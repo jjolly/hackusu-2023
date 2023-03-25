@@ -133,8 +133,8 @@ class room:
                 i.wound(damage)
                 if i.getHP() <= 0:
                     self.removeMonster(monsterID)
-                return True
-        raise('ATTEMPTING TO ATTACK AN ENEMY THAT DOES NOT EXIST')
+                    return True
+        return False
     def pickupItem(self, x, y):
         for i in self.items:
             if i.x == x and i.y == y:
