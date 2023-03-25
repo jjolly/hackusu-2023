@@ -50,12 +50,12 @@ class room:
         created = 0
         self.monsters = []
         while (created < create):
-            looking = False
+            looking = True
             while (looking):
                 tempX = random.randint(1, self.x-1)
                 tempY = random.randint(1, self.y-1)
-                if [tempX, tempY] not in self.avoid:
-                    self.looking = True
+                if [tempX, tempY] not in avoid:
+                    looking = False
                     avoid.append([tempX,tempY])
             mon = creatures.randomMonster(self.level, created, tempX, tempY)
             mon = mon.getStore()
@@ -66,12 +66,12 @@ class room:
         created = 0
         self.items = []
         while (created < create):
-            looking = False
+            looking = True
             while (looking):
                 tempX = random.randint(1, self.x-1)
                 tempY = random.randint(1, self.y-1)
                 if [tempX, tempY] not in self.pillars:
-                    self.looking = True
+                    looking = False
                     avoid.append([tempX,tempY])
             item = items.createItems(self.level, created, tempX, tempY)
             self.items.append(mon)
@@ -98,12 +98,12 @@ class room:
         use = self.getItems()
         for i in use:
             avoid.append(i)
-        looking = False
+        looking = True
         while (looking):
             tempX = random.randint(1, self.x-1)
             tempY = random.randint(1, self.y-1)
             if [tempX, tempY] not in avoid:
-                self.looking = True
+                self.looking = False
                 avoid.append([tempX,tempY])
                 self.exit = [tempX,tempY]
     def removeMonster(self, monsterID):
