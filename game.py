@@ -44,13 +44,13 @@ class Game:
         if self.event['pillar']:
             if(len(msgs) > 0):
                 msgs += ' '
-            msgs += breakAt('Ouch! You can\'t go that way!', len(board[0]))
+            msgs += 'Ouch! You can\'t go that way!'
         if self.event['mondmg'] > 0:
             if(len(msgs) > 0):
                 msgs += ' '
-            msgs += breakAt(f'You attacked a {self.event["montype"]} for {self.event["monster"]} damage.', len(board[0]))
+            msgs += f'You attacked a {self.event["montype"]} for {self.event["mondmg"]} damage.'
             if self.event['mondead']:
-                msgs += breakAt(f' You destroyed the {self.event["montype"]}!')
+                msgs += f' You destroyed the {self.event["montype"]}!'
         return msgs
 
     def sendCommand(self, cmd):
