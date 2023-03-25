@@ -18,7 +18,7 @@ class randomMonster:
     def __init__(self,depth, ID, x, y):
         types = ['spider',
                  'orc',
-                 'skeleton,
+                 'skeleton',
                  ]
         use = random.randint(0, len(types))
         return monster(depth, ID, x, y, types[use])
