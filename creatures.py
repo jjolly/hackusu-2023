@@ -121,7 +121,7 @@ class pc(creatures):
         self.y = 1
         self.equipped = False
         self.needed = 10
-        self.inventory = [ty]
+        self.inventory = [starters[ty](0, 1, 0, 0)]
     def getInventory(self):
         return self.inventory
     def addInventory(self, item):
